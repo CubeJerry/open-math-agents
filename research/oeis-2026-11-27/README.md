@@ -133,6 +133,21 @@ follows by factoring out $P_n$ on the left and expanding the remaining cubic in 
 
 [Conjecture](https://oeis.org/A383702) · [Related result for A383700](https://oeis.org/A383700) · [Lean proof](../../proofs/oeis-a383702.lean) · [Lean statement](../../statements/oeis-a383702.lean)
 
+## A398343 — Each integer value occurs only finitely often
+
+Write $k=\prod_{i=1}^r p_i^{e_i}$, with distinct primes and positive exponents. The sum of the radicals of the divisors is multiplicative because the radical is multiplicative on coprime integers. On a prime power $p^e$ this sum is $1+ep$. Thus the quotient in this sequence is
+
+$$
+Q(k)=\frac{\sum_{d\mid k}\operatorname{rad}(d)}{\operatorname{rad}(k)}
+=\prod_{i=1}^r\left(e_i+\frac1{p_i}\right).
+$$
+
+Fix a positive integer $m$ and suppose $Q(k)=m$. Every $e_i$ is at most $m$, and if $h$ of the exponents are at least two, then $2^h\le\prod_i e_i\le m$. Among the remaining exponents, let $s$ be the number equal to one with $p_i$ odd. Each of these gives an even factor in $\prod_i(e_i p_i+1)=m\prod_i p_i$. The primes on the right are distinct, so $s\le v_2(m)+1$. At most one additional exponent belongs to $p_i=2$. This bounds the number of prime factors, including those that make factors arbitrarily close to one.
+
+Now fix their number $r$ and order the primes increasingly. There are only finitely many possible exponent vectors. For any one such vector, the function $\prod_i(e_i+1/p_i)$ decreases strictly if any coordinate increases while the others stay fixed or increase. Its level set in positive integer vectors therefore contains no two distinct coordinatewise comparable vectors. By Dickson's lemma this level set is finite. Equivalently, every infinite sequence of natural numbers has an infinite nondecreasing subsequence, and applying this successively to each of the $r$ coordinates would give two comparable vectors. The empty vector accounts for $k=1$. Each vector determines $k$, proving the assertion for every $m$.
+
+[Conjecture](https://oeis.org/A398343) · [Sequence choosing the eligible integers](https://oeis.org/A398342) · [Lean proof](../../proofs/oeis-a398343.lean) · [Lean statement](../../statements/oeis-a398343.lean)
+
 ## Verification
 
 Each [checker verdict](verification) records a successful local run of the project’s `tools/check.sh` against its pinned formal-conjectures revision `9097e2f90e66d2f6244209cb1c07f7120d17ec53`. For A395111 the main target is a conjunction, so the project audits the disproof. The separate [axiom audit for the density theorem](verification/395111-density.txt) checks its positive conclusion independently. The statement stubs retain the single placeholder required for human review. The proofs use only the standard Lean axioms listed in the verdicts.
