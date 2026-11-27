@@ -213,6 +213,120 @@ theorem solution : ((∀ x : Cell, 0 < value x) ∧
     obtain ⟨x,hx⟩ := covers v hv
     exact ⟨x,hx,fun y hy => value_injective (hy.trans hx.symm)⟩
 
+/-- Ordinary positive row and column numbers of the source triangle. -/
+structure RowColumn where
+  row : ℕ
+  col : ℕ
+  hcol : 0<col
+  hbound : col≤row
+
+lemma rowColumn_ext_val {x y : RowColumn} (hr : x.row=y.row) (hc : x.col=y.col) : x=y := by
+  cases x
+  cases y
+  congr
+
+lemma row_block_exists (n : ℕ) : ∃ t : ℕ, n < Nat.fib (t+3) :=
+  ⟨n+5,lt_of_lt_of_le (by omega) (Nat.le_fib_self (n:=n+5+3) (by omega))⟩
+
+noncomputable def blockOf (n : ℕ) := Nat.find (row_block_exists n)
+
+lemma block_interval {n : ℕ} (hn : 0<n) :
+    Nat.fib (blockOf n+2) ≤ n ∧ n < Nat.fib (blockOf n+3) := by
+  refine ⟨?_,Nat.find_spec (row_block_exists n)⟩
+  by_cases h : blockOf n=0
+  · simpa [h] using (show 1≤n by omega)
+  · have hm : blockOf n-1 < blockOf n := by omega
+    have h' := Nat.find_min (row_block_exists n) (m:=blockOf n-1) hm
+    have he : blockOf n-1+3=blockOf n+2 := by omega
+    simpa [he] using h'
+
+lemma block_recover (t r : ℕ) (hr : r < Nat.fib (t+1)) : blockOf (width t r)=t := by
+  have hw : 0<width t r := by
+    have h : 0<Nat.fib (t+2) := Nat.fib_pos.mpr (by omega)
+    unfold width;omega
+  obtain ⟨hl,hu⟩ := block_interval hw
+  have hb : width t r < Nat.fib (t+3) := by
+    unfold width
+    have hF : Nat.fib (t+3) = Nat.fib (t+1)+Nat.fib (t+2) := Nat.fib_add_two
+    omega
+  apply le_antisymm
+  · exact Nat.find_min' (row_block_exists _) hb
+  · by_contra! hh
+    have hf := Nat.fib_mono (show blockOf (width t r)+3 ≤ t+2 by omega)
+    have hw' : Nat.fib (t+2) ≤ width t r := Nat.le_add_right _ _
+    omega
+
+def ordinaryCell (x : Cell) : RowColumn :=
+  ⟨width x.block x.row,x.column.val+1,Nat.succ_pos _,x.column.isLt⟩
+
+noncomputable def blockCell (z : RowColumn) : Cell := by
+  let t := blockOf z.row
+  have hn : 0<z.row := lt_of_lt_of_le z.hcol z.hbound
+  have h1 := (block_interval hn).1
+  have h2 := (block_interval hn).2
+  let r := z.row - Nat.fib (t+2)
+  have hlow : Nat.fib (t+2) ≤ z.row := h1
+  have hup : z.row < Nat.fib (t+1)+Nat.fib (t+2) := by
+    simpa only [t,Nat.fib_add_two (n:=blockOf z.row+1)] using h2
+  have hrow : r<Nat.fib (t+1) := by dsimp [r];omega
+  have hw : width t r=z.row := by unfold width; dsimp [r];omega
+  exact ⟨t,⟨r,hrow⟩,⟨z.col-1,by rw [hw];have := z.hcol;have := z.hbound;omega⟩⟩
+
+lemma cell_ext_val {x y : Cell} (ht : x.block=y.block) (hr : x.row.val=y.row.val)
+    (hj : x.column.val=y.column.val) : x=y := by
+  obtain ⟨t,r,j⟩ := x
+  obtain ⟨u,s,k⟩ := y
+  change t=u at ht
+  subst u
+  have he : r=s := Fin.ext hr
+  subst s
+  have he : j=k := Fin.ext hj
+  subst k
+  rfl
+
+noncomputable def ordinaryEquiv : Cell ≃ RowColumn where
+  toFun := ordinaryCell
+  invFun := blockCell
+  left_inv := by
+    rintro ⟨t,⟨r,hr⟩,⟨j,hj⟩⟩
+    have ht := block_recover t r hr
+    apply cell_ext_val
+    · exact ht
+    · change width t r - Nat.fib (blockOf (width t r)+2) = r
+      rw [ht]
+      simp [width]
+    · rfl
+  right_inv := by
+    rintro ⟨n,j,hj,hjn⟩
+    have h := (block_interval (lt_of_lt_of_le hj hjn)).1
+    apply rowColumn_ext_val <;> (dsimp [ordinaryCell,blockCell,width] <;> omega)
+
+noncomputable def originalEntry (z : RowColumn) : ℕ :=
+  let t := blockOf z.row
+  (Nat.fib (t+1))^2 + (1-(t+1)%2) +
+    (z.row-Nat.fib (t+2))*Nat.fib t + (z.col-1)*Nat.fib (t+1)
+
+lemma originalEntry_eq (z : RowColumn) : originalEntry z = value (blockCell z) := by
+  let t := blockOf z.row
+  have he : 1-(t+1)%2=t%2 := by omega
+  dsimp [originalEntry,value,blockCell,entry,start]
+  simp only [t] at he
+  rw [he]
+  ring
+
+theorem original_triangle_permutation (v : ℕ) (hv : 0<v) :
+    ∃! z : RowColumn, originalEntry z=v := by
+  obtain ⟨x,hx,hu⟩ := solution.1.2 v hv
+  refine ⟨ordinaryEquiv x,?_,?_⟩
+  · change originalEntry (ordinaryEquiv x) = v
+    rw [originalEntry_eq]
+    change value (ordinaryEquiv.symm (ordinaryEquiv x)) = v
+    simpa using hx
+  · intro y hy
+    change originalEntry y=v at hy
+    rw [originalEntry_eq] at hy
+    exact (ordinaryEquiv.symm_apply_eq.mp (hu _ hy))
+
 end OMA.S_oeis_a385590
 
 theorem OMA.solution : type_of% @OMA.S_oeis_a385590.main :=

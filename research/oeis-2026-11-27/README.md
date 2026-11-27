@@ -2,6 +2,21 @@
 
 These proofs use Lean 4.33.1 and the project's pinned Mathlib. The matching statement files give each proof its declared target. The project checks the axioms of `OMA.solution` or `OMA.disproof` to ensure the proof is independent of the statement placeholder.
 
+## Left to Solve submissions
+
+Each linked pull request asks for the human translation review required before a proof can enter the project’s proof queue. The linked proof and verdict are available here for immediate review.
+
+| OEIS entry | Statement pull request | Verified proof |
+|---|---|---|
+| A365383 | [#4651](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/4651) | [Lean](../../proofs/oeis-a365383.lean) · [Verdict](verification/365383.json) |
+| A389425 | [#4664](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/4664) | [Lean](../../proofs/oeis-a389425.lean) · [Verdict](verification/389425.json) |
+| A395088 | [#4647](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/4647) | [Lean](../../proofs/oeis-a395088.lean) · [Verdict](verification/395088.json) |
+| A398920 | [#4644](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/4644) | [Lean](../../proofs/oeis-a398920.lean) · [Verdict](verification/398920.json) |
+| A395111 | [#4626](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/4626) | [Lean](../../proofs/oeis-a395111.lean) · [Verdict](verification/395111.json) |
+| A385590 | [#4635](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/4635) | [Lean](../../proofs/oeis-a385590.lean) · [Verdict](verification/385590.json) |
+| A383702 | [#4629](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/4629) | [Lean](../../proofs/oeis-a383702.lean) · [Verdict](verification/383702.json) |
+| A398343 | [#4622](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/4622) | [Lean](../../proofs/oeis-a398343.lean) · [Verdict](verification/398343.json) |
+
 ## A365383 — Least eventual period of a partition row
 
 Fix a positive integer $n$. Let $T(n,k)$ count the partitions of $n$ whose part sizes represent $k$ with unrestricted nonnegative multiplicities. If a partition represents $k$, appending every part of the partition once gives a representation of $k+n$. Thus $T(n,k)$ is nondecreasing along each residue class modulo $n$. Each such sequence consists of integers bounded by the number $p(n)$ of partitions. It eventually stabilizes. Taking the largest threshold among the $n$ residue classes gives $T(n,k+n)=T(n,k)$ for all sufficiently large $k$.
@@ -22,7 +37,7 @@ If $t_{i+1}-t_i>1$, then $t_i+1$ is ineligible. At least one of $6t_i+1$ and $6t
 
 Let $h(0)=011$ and $h(1)=0$. Iteration from $0$ gives strictly increasing nested prefixes and therefore an infinite fixed point $w$. The second iterate has the two blocks $h^2(0)=01100$ and $h^2(1)=011$. Each starts with one zero and two ones. An additional pair of zeros follows the ones precisely when the input bit is zero.
 
-Since $w=h^2(w)$, its initial zero run has length one. After the two ones in the block for input $w_i$, the next zero run consists of the trailing zeros of that block and the initial zero of the following block. Its length is three for $w_i=0$ and one for $w_i=1$. Every one run has length two. With the input indexed from zero and runs from one, this gives $c(i+2)=3-2w_i$ for every $i\ge0$.
+Since $w=h^2(w)$, its initial zero run has length one. After the two ones in the block for input $w_i$, the next zero run consists of the trailing zeros of that block and the initial zero of the following block. Its length is three for $w_i=0$ and one for $w_i=1$. Every one run has length two. The theorem `all_runs` also constructs the infinite sequence and gives the start and end of every run. With the input indexed from zero and runs from one, this gives $c(i+2)=3-2w_i$ for every $i\ge0$.
 
 [Conjecture](https://oeis.org/A395088) · [Lean proof](../../proofs/oeis-a395088.lean) · [Lean statement](../../statements/oeis-a395088.lean)
 
@@ -52,13 +67,13 @@ $$
 a(N)=\frac{N^2(\log N)^2}{4}+O(N^2\log N)
 $$
 
-as conjectured. The constant $1/4$ accounts for both the triangle area and the restriction to distinct sizes in increasing order.
+as conjectured. The theorem `original_quadruples_asymptotic` states this directly for the cardinality of the original positive quadruples. Its explicit bijection identifies each quadruple with exactly one summand and one of its counted choices. The constant $1/4$ accounts for both the triangle area and the restriction to distinct sizes in increasing order.
 
 [Conjecture](https://oeis.org/A398920) · [Lean proof](../../proofs/oeis-a398920.lean) · [Lean statement](../../statements/oeis-a398920.lean)
 
 ## A395111 — Two conjectures about the same partition count
 
-Let $A(n)$ count the partitions of $n$ into distinct positive parts whose radicals sum to $\operatorname{rad}(n)$, where the radical is the product of the distinct prime factors. Let $B(n)$ count partitions into distinct squarefree parts. The two conjectures in this entry have different answers.
+Let $A(n)$ count the partitions of $n$ into distinct positive parts whose radicals sum to $\operatorname{rad}(n)$, where the radical is the product of the distinct prime factors. Let $B(n)$ count partitions into distinct squarefree parts. The Lean theorem `original_partition_results` states both answers using the cardinalities of the actual sets of partitions. It proves that the recurrences count those sets by separating partitions according to whether they contain their largest permitted part.
 
 ### The two ranges differ
 
@@ -115,7 +130,7 @@ $$
 s_t+ar+b(c+r+k)=s_{t+1}+cr+bk.
 $$
 
-As $0\le r<b$, these fill exactly $S_{t+1}$ by the same division argument, now with coefficients $c,b$. Thus block $t$ is exactly $S_t\setminus S_{t+1}$, with each member occurring once. The first tail $S_0$ is the set of all positive integers since $(s_0,a,b)=(1,0,1)$. Also $s_t\to\infty$. Every positive integer therefore leaves the nested tails at exactly one block, which proves both existence and uniqueness.
+As $0\le r<b$, these fill exactly $S_{t+1}$ by the same division argument, now with coefficients $c,b$. Thus block $t$ is exactly $S_t\setminus S_{t+1}$, with each member occurring once. The first tail $S_0$ is the set of all positive integers since $(s_0,a,b)=(1,0,1)$. Also $s_t\to\infty$. Every positive integer therefore leaves the nested tails at exactly one block, which proves both existence and uniqueness. The theorem `original_triangle_permutation` gives the result for the original formula on all positive row and column numbers with column at most row, including a proof that the source indexing and block indexing are equivalent.
 
 The entry also asks for an alternating binomial sum. Each row is affine in the zero-based column $j$. For row length $n\ge3$, both the constant and linear terms vanish in its alternating binomial transform, by evaluating $(1-x)^{n-1}$ and its derivative at $x=1$. The two short rows give $-1$ and $1$. This identity already has a published Lean proof. That work explicitly excludes the permutation conjecture, which is the result counted here.
 
@@ -150,7 +165,7 @@ Now fix their number $r$ and order the primes increasingly. There are only finit
 
 ## A398342 — A counterexample to the related least-multiple question
 
-The source asks whether, for every odd prime $p$, each smaller prime divisor of the least qualifying multiple of $p$ divides $p-1$. The answer is **no for $p=107$**. This question occurs in the A398342 comments. It is separate from the eight problem entries above.
+The source asks whether, for every odd prime $p$, each smaller prime divisor of the least qualifying multiple of $p$ divides $p-1$. The answer is **no for $p=107$**. This question occurs in the A398342 comments. Left to Solve has no separate entry for it.
 
 Use the eligibility test $Q(k)\in\mathbb Z$ from the preceding proof. There is a qualifying multiple of 107 at
 
@@ -177,3 +192,5 @@ The lower bound follows from $e_q+1/q>e_q$. For the upper bound every factor is 
 ## Verification
 
 Each [checker verdict](verification) records a successful local run of the project’s `tools/check.sh` against its pinned formal-conjectures revision `9097e2f90e66d2f6244209cb1c07f7120d17ec53`. For A395111 the main target is a conjunction, so the project audits the disproof. The separate [axiom audit for the density theorem](verification/395111-density.txt) checks its positive conclusion independently. The statement stubs retain the single placeholder required for human review. The proofs use only the standard Lean axioms listed in the verdicts.
+
+The independent axiom reports also cover the theorems on the [original triangle indices](verification/385590-source.txt), the [infinite sequence of runs](verification/395088-source.txt), the [cardinalities of the sets of partitions](verification/395111-source.txt), and the [original set of positive quadruples](verification/398920-source.txt). Each uses only `propext`, `Classical.choice`, and `Quot.sound`.

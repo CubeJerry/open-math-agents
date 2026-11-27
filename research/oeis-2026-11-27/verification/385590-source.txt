@@ -1,0 +1,1 @@
+'OMA.S_oeis_a385590.original_triangle_permutation' depends on axioms: [propext, Classical.choice, Quot.sound]

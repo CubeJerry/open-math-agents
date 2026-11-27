@@ -5,6 +5,7 @@ import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.NormNum
+import Mathlib.Data.Fintype.BigOperators
 
 namespace OMA.S_oeis_a398920
 
@@ -182,6 +183,105 @@ theorem solution :
   constructor <;> linarith only [U,V,W,Z,T,hA.1,hA.2]
 
 end
+
+/-- The four original positive variables in the Diophantine inequality. -/
+structure Quadruple (N : ℕ) where
+  a : ℕ
+  b : ℕ
+  c : ℕ
+  d : ℕ
+  ha : 0<a
+  hb : 0<b
+  hc : 0<c
+  hd : 0<d
+  bound : a*b + b*c + c*d ≤ N
+
+lemma quad_ext_val {N : ℕ} {x y : Quadruple N} (ha : x.a=y.a) (hb : x.b=y.b)
+    (hc : x.c=y.c) (hd : x.d=y.d) : x=y := by
+  cases x
+  cases y
+  congr
+
+abbrev Indices (N : ℕ) :=
+  (j : Fin N) × (i : Fin j.val) × (u : Fin (N/(i.val+1))) ×
+    Fin ((N-(i.val+1)*(u.val+1))/(j.val+1))
+
+def indicesToQuad {N : ℕ} : Indices N → Quadruple N
+  | ⟨j,i,u,v⟩ => by
+    have hu := (Nat.le_div_iff_mul_le (Nat.succ_pos i.val)).mp u.isLt
+    have hv := (Nat.le_div_iff_mul_le (Nat.succ_pos j.val)).mp v.isLt
+    change (u.val+1)*(i.val+1) ≤ N at hu
+    change (v.val+1)*(j.val+1) ≤ N-(i.val+1)*(u.val+1) at hv
+    have hi := i.isLt
+    refine ⟨u.val+1,i.val+1,v.val+1,j.val-i.val,by omega,by omega,by omega,by omega,?_⟩
+    have hb : i.val+1+(j.val-i.val)=j.val+1 := by omega
+    calc
+      _ = (i.val+1)*(u.val+1)+(v.val+1)*(i.val+1+(j.val-i.val)) := by ring
+      _ ≤ N := by rw [hb];rw [mul_comm] at hu; omega
+
+def quadToIndices {N : ℕ} (x : Quadruple N) : Indices N := by
+  obtain ⟨a,b,c,d,ha,hb,hc,hd,h⟩ := x
+  have H : b*a+c*(b+d)≤N := by nlinarith only [h]
+  have h1 : b+d≤c*(b+d) := Nat.le_mul_of_pos_left _ hc
+  have h2 : b*a≤N := by omega
+  have jpos : 0<b+d := by omega
+  let j : Fin N := ⟨b+d-1,by omega⟩
+  let i : Fin j.val := ⟨b-1,by dsimp [j];omega⟩
+  have hi : i.val+1=b := by dsimp [i];omega
+  have hj : j.val+1=b+d := by dsimp [j];omega
+  let u : Fin (N/(i.val+1)) := ⟨a-1,by
+    rw [hi]
+    have h' := (Nat.le_div_iff_mul_le hb).mpr (by simpa [mul_comm] using h2 : a*b≤N)
+    omega⟩
+  have hu : u.val+1=a := by dsimp [u];omega
+  refine ⟨j,i,u,⟨c-1,?_⟩⟩
+  rw [hu,hi,hj]
+  have h' : c ≤ (N-b*a)/(b+d) :=
+    (Nat.le_div_iff_mul_le jpos).mpr (by omega)
+  omega
+
+lemma index_ext_val {N : ℕ} {x y : Indices N} (hj : x.1.val=y.1.val)
+    (hi : x.2.1.val=y.2.1.val) (hu : x.2.2.1.val=y.2.2.1.val)
+    (hv : x.2.2.2.val=y.2.2.2.val) : x=y := by
+  obtain ⟨j,i,u,v⟩ := x
+  obtain ⟨k,l,w,z⟩ := y
+  have he : j=k := Fin.ext hj
+  subst k
+  have he : i=l := Fin.ext hi
+  subst l
+  have he : u=w := Fin.ext hu
+  subst w
+  have he : v=z := Fin.ext hv
+  subst z
+  rfl
+
+def quadEquiv (N : ℕ) : Indices N ≃ Quadruple N where
+  toFun := indicesToQuad
+  invFun := quadToIndices
+  left_inv := by
+    rintro ⟨⟨j,hj⟩,⟨i,hi⟩,⟨u,hu⟩,⟨v,hv⟩⟩
+    change i<j at hi
+    apply index_ext_val <;> (dsimp [indicesToQuad,quadToIndices] <;> omega)
+  right_inv := by
+    rintro ⟨a,b,c,d,ha,hb,hc,hd,hh⟩
+    apply quad_ext_val <;> (dsimp [indicesToQuad,quadToIndices] <;> omega)
+
+theorem count_original_quadruples (N : ℕ) : Nat.card (Quadruple N) = count N := by
+  rw [← Nat.card_congr (quadEquiv N),Nat.card_eq_fintype_card]
+  unfold count triangle Indices
+  simp only [Fintype.card_sigma,Fintype.card_fin]
+  rw [← Fin.sum_univ_eq_sum_range (fun j => ∑ i ∈ range j, ∑ u ∈ range (N/(i+1)), (N-(i+1)*(u+1))/(j+1))]
+  apply sum_congr rfl
+  intro j _
+  rw [← Fin.sum_univ_eq_sum_range (fun i => ∑ u ∈ range (N/(i+1)), (N-(i+1)*(u+1))/(j.val+1))]
+  apply sum_congr rfl
+  intro i _
+  exact Fin.sum_univ_eq_sum_range (fun u => (N-(i.val+1)*(u+1))/(j.val+1)) _
+
+theorem original_quadruples_asymptotic :
+    (fun N : ℕ => (Nat.card (Quadruple N) : ℝ) - (N:ℝ)^2 * (Real.log N)^2 / 4)
+      =O[atTop] (fun N : ℕ => (N:ℝ)^2 * Real.log N) := by
+  simpa only [count_original_quadruples] using solution
 
 end OMA.S_oeis_a398920
 

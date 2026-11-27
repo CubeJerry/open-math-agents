@@ -441,6 +441,127 @@ theorem density_zero :
 
 end
 
+open Finset
+noncomputable section
+open scoped Classical
+
+def partitions (P : ℕ → Prop) (w : ℕ → ℕ) (L n s : ℕ) : Finset (Finset ℕ) :=
+  ((Icc 1 L).powerset).filter fun A =>
+    (∀ q ∈ A, P q) ∧ (∑ q ∈ A,q)=n ∧ (∑ q ∈ A,w q)=s
+
+lemma partition_mem {P : ℕ→Prop} {w : ℕ→ℕ} {L n s : ℕ} {A : Finset ℕ} :
+    A∈partitions P w L n s ↔ (∀ q ∈ A, 0<q ∧ q≤L ∧ P q) ∧
+    (∑ q ∈ A,q)=n ∧ (∑ q ∈ A,w q)=s := by
+  simp only [partitions,mem_filter,mem_powerset,subset_iff,mem_Icc]
+  constructor
+  · rintro ⟨ha,hp,hv,hw⟩
+    exact ⟨fun q h => ⟨(ha h).1,(ha h).2,hp _ h⟩,hv,hw⟩
+  · rintro ⟨ha,hv,hw⟩
+    exact ⟨fun _ h => ⟨(ha _ h).1,(ha _ h).2.1⟩,fun _ h => (ha _ h).2.2,hv,hw⟩
+
+lemma partition_recur (P : ℕ→Prop) (w : ℕ→ℕ) (L n s : ℕ) :
+    (partitions P w (L+1) n s).card = (partitions P w L n s).card +
+      if P (L+1) ∧ L+1≤n ∧ w (L+1)≤s then (partitions P w L (n-(L+1)) (s-w (L+1))).card else 0 := by
+  let Q := partitions P w L (n-(L+1)) (s-w (L+1))
+  let k := L+1
+  have hout {nn ss : ℕ} {A : Finset ℕ} (h : A∈partitions P w L nn ss) : k∉A := by
+    intro hk
+    have hh := (partition_mem.mp h).1 k hk
+    dsimp [k] at hh
+    omega
+  let ok := P k ∧ k≤n ∧ w k≤s
+  let added := Q.image (insert k)
+  have hsplit : partitions P w (L+1) n s = partitions P w L n s ∪ (if ok then added else ∅) := by
+    ext A
+    constructor
+    · intro h
+      obtain ⟨hA,hv,hw⟩ := partition_mem.mp h
+      by_cases hk : k∈A
+      · have hVk := (sum_erase_add A (fun q : ℕ => q) hk)
+        have hWk := (sum_erase_add A w hk)
+        have hP := (hA k hk).2.2
+        have hOK : ok := ⟨hP,by omega,by omega⟩
+        apply mem_union.mpr
+        right
+        rw [if_pos hOK]
+        refine mem_image.mpr ⟨A.erase k,partition_mem.mpr ⟨?_,?_,?_⟩,insert_erase hk⟩
+        · intro q hq
+          obtain ⟨hne,hmem⟩ := mem_erase.mp hq
+          obtain ⟨h1,h2,h3⟩ := hA q hmem
+          dsimp [k] at hne
+          exact ⟨h1,by omega,h3⟩
+        · change _ = n-k
+          omega
+        · change _ = s-w k
+          omega
+      · apply mem_union_left
+        apply partition_mem.mpr
+        refine ⟨?_,hv,hw⟩
+        intro q hq
+        obtain ⟨h1,h2,h3⟩ := hA q hq
+        have hne : q ≠ L+1 := by intro hh;subst q;exact hk hq
+        exact ⟨h1,by omega,h3⟩
+    · intro h
+      rcases mem_union.mp h with h|h
+      · obtain ⟨hp,hv,hw⟩ := partition_mem.mp h
+        exact partition_mem.mpr ⟨fun q hq => ⟨(hp q hq).1,Nat.le_succ_of_le (hp q hq).2.1,
+          (hp q hq).2.2⟩,hv,hw⟩
+      · split at h
+        next hOK =>
+          obtain ⟨B,hB,rfl⟩ := mem_image.mp h
+          obtain ⟨hb,hv,hw⟩ := partition_mem.mp hB
+          obtain ⟨hpp,hnn,hss⟩ := hOK
+          apply partition_mem.mpr
+          change (∑ q ∈ B,q)=n-k at hv
+          change (∑ q ∈ B,w q)=s-w k at hw
+          simp only [sum_insert (hout hB)]
+          refine ⟨?_,by omega,by omega⟩
+          intro q hq
+          rcases mem_insert.mp hq with rfl|h'
+          · exact ⟨Nat.succ_pos _,le_rfl,hpp⟩
+          · exact ⟨(hb _ h').1,Nat.le_succ_of_le (hb _ h').2.1,(hb _ h').2.2⟩
+        next => simp at h
+  have hdis : Disjoint (partitions P w L n s) added := by
+    apply disjoint_left.mpr
+    intro A hA hh
+    obtain ⟨B,_,he⟩ := mem_image.mp hh
+    exact hout hA (he ▸ mem_insert_self k B)
+  rw [hsplit]
+  by_cases hok : ok
+  · rw [if_pos hok,if_pos hok,card_union_of_disjoint hdis]
+    congr 1
+    apply card_image_of_injOn
+    intro A hA B hB he
+    have h := congrArg (fun C : Finset ℕ => C.erase k) he
+    simpa [erase_insert (hout hA),erase_insert (hout hB)] using h
+  · rw [if_neg hok,if_neg hok,union_empty,add_zero]
+
+theorem radicalWays_card (L n s : ℕ) :
+    radicalWays L n s = (partitions (fun _ => True) rad L n s).card := by
+  induction L generalizing n s with
+  | zero =>
+    by_cases hn : n=0 <;> by_cases hs : s=0 <;> simp [partitions,radicalWays,Finset.filter_singleton,hn,hs,eq_comm]
+  | succ L ih => simp only [radicalWays,partition_recur,true_and,ih]
+
+theorem squareWays_card (L n : ℕ) :
+    squareWays L n = (partitions Squarefree (fun _ => 0) L n 0).card := by
+  induction L generalizing n with
+  | zero =>
+    by_cases hn : n=0 <;> simp [partitions,squareWays,Finset.filter_singleton,hn,eq_comm]
+  | succ L ih =>
+    simp only [squareWays,partition_recur,le_refl,and_true,Nat.sub_zero,ih]
+
+theorem original_partition_results :
+    ((partitions (fun _ => True) rad 44 44 (rad 44)).card = 53 ∧
+      ∀ n, (partitions Squarefree (fun _ => 0) n n 0).card ≠ 53) ∧
+    Tendsto (fun N : ℕ => ((((Finset.range N).filter (fun n =>
+      (partitions (fun _ => True) rad n n (rad n)).card = 1)).card : ℕ) : ℝ) / N)
+      atTop (𝓝 0) := by
+  simp only [← radicalWays_card,← squareWays_card]
+  exact ⟨⟨witness,missing⟩,density_zero⟩
+
+end
+
 end OMA.S_oeis_a395111
 
 theorem OMA.disproof : ¬ (type_of% @OMA.S_oeis_a395111.main) :=
