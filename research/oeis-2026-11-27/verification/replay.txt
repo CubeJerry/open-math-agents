@@ -1,0 +1,14 @@
+Proof revision 31c34c3c0c8b401bf5e2980871a709161b9c5ccb
+Lean 4.33.1
+formal-conjectures 9097e2f90e66d2f6244209cb1c07f7120d17ec53
+Command for each problem: tools/check.sh proofs/<problem>.lean <verdict-file>
+
+problem  proof SHA-256  verdict  axiom audit
+oeis-a365383  ae032095f359acc34f20470c3f1f7bb20d502a75a31ff164011486fd27ecfb10  accepted  'OMA.solution' depends on axioms: [propext, Classical.choice, Quot.sound]
+oeis-a389425  20b2d9de9402cd344ec9e796cf6d58a050e68201caf0ac350f31e7b9c188782c  accepted  'OMA.solution' depends on axioms: [propext, Classical.choice, Quot.sound]
+oeis-a395088  e886bbc8c90d6b7fa0ddd9b82691272078ee47a3126f63b62b2b429edfe90f5a  accepted  'OMA.solution' depends on axioms: [propext]
+oeis-a398920  7d0a8cb624240a2caa7cac1805be5d870ebb9a36944dffc8e843c72f8089d114  accepted  'OMA.solution' depends on axioms: [propext, Classical.choice, Quot.sound]
+oeis-a395111  80e31e74aa3519462ecb9c7c49634f1b63773754cf5fe1b39d57d4101c5ef688  accepted  'OMA.disproof' depends on axioms: [propext, Classical.choice, Quot.sound]
+oeis-a385590  7b7c46cfb2d12bb132028a6a093fe80f274f7e8bc767d5d8ee6478087319079a  accepted  'OMA.solution' depends on axioms: [propext, Classical.choice, Quot.sound]
+oeis-a383702  adfd43a8c3ba6acbd0d55e91f01e9a405be0c1e67a548f11a58b03f888082816  accepted  'OMA.solution' depends on axioms: [propext, Classical.choice, Quot.sound]
+oeis-a398343  19279f7d30f5bb6f84cc06982cb143c7ff8f31d593e4921da0566fdac5fddcf9  accepted  'OMA.solution' depends on axioms: [propext, Classical.choice, Quot.sound]
