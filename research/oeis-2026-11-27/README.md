@@ -25,3 +25,76 @@ Let $h(0)=011$ and $h(1)=0$. Iteration from $0$ gives strictly increasing nested
 Since $w=h^2(w)$, its initial zero run has length one. After the two ones in the block for input $w_i$, the next zero run consists of the trailing zeros of that block and the initial zero of the following block. Its length is three for $w_i=0$ and one for $w_i=1$. Every one run has length two. With the input indexed from zero and runs from one, this gives $c(i+2)=3-2w_i$ for every $i\ge0$.
 
 [Conjecture](https://oeis.org/A395088) · [Lean proof](../../proofs/oeis-a395088.lean) · [Lean statement](../../statements/oeis-a395088.lean)
+
+## A398920 — Counting solutions to $ab+bc+cd\le N$
+
+The variables are positive integers, as in the entry's geometric description and enumeration. Put $i=b$ and $j=b+d$. This is a bijection with solutions $ia+jc\le N$ with $1\le i<j\le N$ and $a,c\ge1$. Write $W_{ij}$ for the count at fixed $i,j$ and $q=\lfloor N/i\rfloor$, $r=N-iq$. Then
+
+$$
+W_{ij}=\sum_{a=1}^{q}\left\lfloor\frac{N-ia}{j}\right\rfloor .
+$$
+
+Removing the floors increases the sum by at most $q\le N/i$. The resulting sum falls short of the triangle area $N^2/(2ij)$ by exactly $(r^2+i(N-r))/(2ij)$, as follows by summing $1+\cdots+q=q(q+1)/2$. Since $0\le r<i$, the latter loss is between zero and $N/(2j)$. In particular,
+
+$$
+0\le\frac{N^2}{2ij}-W_{ij}\le\frac{N}{i}+\frac{N}{j}.
+$$
+
+Let $H_N=\sum_{i=1}^N 1/i$ and $D_N=\sum_{i=1}^N 1/i^2$. Summing the error bound over $i<j$ gives an error at most $N(N-1)H_N$. The areas sum to
+
+$$
+\frac{N^2}{2}\sum_{i<j}\frac{1}{ij}=\frac{N^2}{4}(H_N^2-D_N).
+$$
+
+Here $0\le D_N\le H_N$ and $\log N\le H_N\le 1+\log N$. Thus $H_N^2=(\log N)^2+O(\log N)$, while the floors and the diagonal also contribute at most $O(N^2\log N)$. Consequently
+
+$$
+a(N)=\frac{N^2(\log N)^2}{4}+O(N^2\log N)
+$$
+
+as conjectured. The constant $1/4$ accounts for both the triangle area and the restriction to distinct sizes in increasing order.
+
+[Conjecture](https://oeis.org/A398920) · [Lean proof](../../proofs/oeis-a398920.lean) · [Lean statement](../../statements/oeis-a398920.lean)
+
+## A395111 — Two conjectures about the same partition count
+
+Let $A(n)$ count the partitions of $n$ into distinct positive parts whose radicals sum to $\operatorname{rad}(n)$, where the radical is the product of the distinct prime factors. Let $B(n)$ count partitions into distinct squarefree parts. The two conjectures in this entry have different answers.
+
+### The two ranges differ
+
+We have $A(44)=53$. Grouping the qualifying partitions by their largest part gives the counts below. The recurrence that certifies them considers each part at most once. For remaining total $n$, remaining radical sum $s$ and maximum part $j$, it adds the count omitting $j$ to the count at $(j-1,n-j,s-\operatorname{rad}(j))$ when both differences are nonnegative. At maximum part zero only the state $(0,0)$ counts.
+
+| Largest part | 16 | 20 | 25 | 28 | 44 |
+|---|---:|---:|---:|---:|---:|
+| Qualifying partitions of 44 | 29 | 9 | 10 | 4 | 1 |
+
+Here is a proof that $B(n)$ **never** equals 53. For $0\le n\le32$, the usual recurrence for distinct squarefree parts gives the following values.
+
+```text
+1 1 1 2 1 2 3 3 4 4 5 6 6 8 9 10 13
+14 16 18 20 24 27 30 35 37 42 47 51 59 64 72 81
+```
+
+For $33\le n\le70$, using only the squarefree parts at most 18 gives at least 54 representations at each index. These bounds are coefficients of the finite product $\prod_{1\le j\le18,\ j\text{ squarefree}}(1+x^j)$ and are also verified by the Lean proof. Now use strong induction to prove that every $n\ge33$ has at least 54 representations with parts at most $\max(18,n-33)$. When $n>70$, put $h=\lfloor(n-33)/2\rfloor$. Bertrand's postulate gives a prime $h<p\le2h$. Then $n-p\ge33$, $p>18$ and $n-p-33<p$. Every one of the 54 guaranteed representations of $n-p$ uses parts strictly smaller than $p$. Appending $p$ gives 54 distinct squarefree partitions of $n$, with every part at most $\max(18,n-33)$. This proves the induction and excludes 53 from the entire range.
+
+### The indices with a unique partition have density zero
+
+Write each positive integer uniquely as $n=qm$ by collecting in $q$ the full powers of all primes whose exponent is at least two. Thus $m$ is squarefree, $\gcd(q,m)=1$, and $q$ is powerful, meaning all its positive prime exponents are at least two. The value $q=1$ is allowed.
+
+Fix $q$ for the moment. We show that the exceptional squarefree $m$ coprime to $q$ for which $A(qm)=1$ have density zero. For any positive integer $K$, put $M=q(K!)^2$. Choose $M$ distinct primes larger than $q$. Among the $M+1$ partial sums beginning with zero, two agree modulo $M$. Their difference $s$ is a positive multiple of $M$ and a sum of a nonempty set of distinct primes $r_1,\ldots,r_j$, all coprime to $q$.
+
+Take $m>s+\max r_i$. Since $q\mid s$, the remainder $m-s$ is coprime to $q$. For each prime $p\le K$, its square divides $s$, so $p^2$ cannot divide $m-s$ because $m$ is squarefree. If $m-s$ is squarefree, then
+$qr_1,\ldots,qr_j,q(m-s)$
+are distinct parts of $qm$. Their radicals sum to
+$\operatorname{rad}(q)(r_1+\cdots+r_j+m-s)=\operatorname{rad}(q)m=\operatorname{rad}(qm)$.
+This partition differs from the singleton $(qm)$.
+
+Consequently, except for a fixed initial segment, every exceptional $m\le X$ has $p^2\mid m-s$ for some prime $p>K$. As $0<m-s\le X$, there are at most
+$\sum_{p>K}\lfloor X/p^2\rfloor\le X\sum_{j>K}j^{-2}\le X/K$
+such $m$. The upper density is at most $1/K$ for every $K$, and is therefore zero.
+
+It remains to pass from fixed $q$ to all $n$. Every powerful $q$ has the form $u^2v^3$, by writing each exponent at least two as an even exponent or as three plus an even exponent. Thus
+$\sum_{q\text{ powerful}}1/q\le(\sum_{u\ge1}u^{-2})(\sum_{v\ge1}v^{-3})<\infty$.
+Integers $n\le X$ whose powerful part $q$ exceeds $Q$ number at most $X\sum_{q>Q,\ q\text{ powerful}}1/q$. For $q\le Q$ the finitely many exceptional sets have density zero by the fixed-$q$ argument. Letting $Q$ tend to infinity gives natural density zero for the whole exceptional set.
+
+[Conjectures](https://oeis.org/A395111) · [Comparison sequence](https://oeis.org/A087188) · [Lean disproof of range equality](../../proofs/oeis-a395111.lean) · [Lean statement](../../statements/oeis-a395111.lean)
