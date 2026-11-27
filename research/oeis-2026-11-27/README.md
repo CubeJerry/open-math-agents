@@ -148,6 +148,32 @@ Now fix their number $r$ and order the primes increasingly. There are only finit
 
 [Conjecture](https://oeis.org/A398343) · [Sequence choosing the eligible integers](https://oeis.org/A398342) · [Lean proof](../../proofs/oeis-a398343.lean) · [Lean statement](../../statements/oeis-a398343.lean)
 
+## A398342 — A counterexample to the related least-multiple question
+
+The source asks whether, for every odd prime $p$, each smaller prime divisor of the least qualifying multiple of $p$ divides $p-1$. The answer is **no for $p=107$**. This question occurs in the A398342 comments. It is separate from the eight problem entries above.
+
+Use the eligibility test $Q(k)\in\mathbb Z$ from the preceding proof. There is a qualifying multiple of 107 at
+
+$$
+K=549400309952=2^6\cdot13^4\cdot53^2\cdot107,\qquad Q(K)=54.
+$$
+
+The least qualifying multiple $t$ of 107 therefore exists and satisfies $t\le K$. It suffices to prove that **no qualifying multiple in that whole interval** has all its smaller prime factors in $\{2,53\}$, the prime divisors of 106. This avoids any need to identify the least multiple numerically.
+
+Suppose such an integer exists and write its low-prime part as $L=2^a53^b107^c$ and its other part as $\prod_{q>107}q^{e_q}$. Here $a<40$, $b<7$, and $1\le c<6$ by the size bound. Put $C=Q(L)$. If there are no high primes, exact division shows that $C$ is never integral among these triples with $L\le K$.
+
+Otherwise let $P$ be the largest high prime. Because $Q(t)$ is integral, $P$ must divide some numerator factor $e_q q+1$. The finitely many low-prime numerator factors $2a+1$, $53b+1$, and $107c+1$ in the indicated ranges have all prime factors at most 107. Also $P$ cannot divide $e_PP+1$. Its source must therefore be another high prime $q<P$. Since both are odd, $q+1<P$, so $e_q\ge2$.
+
+Write $r$ for the number of high primes, $s=\sum e_q$ and $E=\prod e_q$. Then $2\le r<s$, $L108^s\le K$, and $2\le E\le 2^{s-r}$, using $e\le2^{e-1}$ for positive $e$. In particular $s\le4$. Writing $m=Q(t)$ gives the interval
+
+$$
+CE<m\le CE(109/108)^r.
+$$
+
+The lower bound follows from $e_q+1/q>e_q$. For the upper bound every factor is at most $e_q(109/108)$. It remains a small exact certificate over **all** possible exponent patterns. The size bound implies $a<13$, $b<3$, $c<3$. For each such triple with $c>0$, each $2\le r<s\le4$ with $L108^s\le K$, and each $2\le E\le2^{s-r}$, integer division gives $\lfloor CE(109/108)^r\rfloor=\lfloor CE\rfloor$. Thus the interval contains no integer. The standalone Lean file verifies these divisions, the low-prime bounds, and the deductions covering every possible factorization. This forces some prime divisor $q<107$ of the least multiple to fail $q\mid106$.
+
+[Original question](https://oeis.org/A398342) · [Complete standalone Lean counterexample](A398342.lean) · [Axiom audit](verification/398342.txt)
+
 ## Verification
 
 Each [checker verdict](verification) records a successful local run of the project’s `tools/check.sh` against its pinned formal-conjectures revision `9097e2f90e66d2f6244209cb1c07f7120d17ec53`. For A395111 the main target is a conjunction, so the project audits the disproof. The separate [axiom audit for the density theorem](verification/395111-density.txt) checks its positive conclusion independently. The statement stubs retain the single placeholder required for human review. The proofs use only the standard Lean axioms listed in the verdicts.
