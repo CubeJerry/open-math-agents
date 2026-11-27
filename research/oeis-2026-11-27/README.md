@@ -121,6 +121,18 @@ The entry also asks for an alternating binomial sum. Each row is affine in the z
 
 [Conjectures](https://oeis.org/A385590) · [Earlier work on the alternating sum](https://www.trureturing.org/research/oeis-a385590-alternating-binomial/) · [Lean proof](../../proofs/oeis-a385590.lean) · [Lean statement](../../statements/oeis-a385590.lean)
 
+## A383702 — The recurrence for the quadratic coefficient
+
+Let $P_n(x)=\prod_{i=0}^{n-1}(x+4i+3)$ and $a(n)=[x^2]P_n(x)$. Set $u=4n+3$. The polynomial identity
+
+$$
+P_{n+3}-3(u+4)P_{n+2}+(3u^2+12u+16)P_{n+1}-u^3P_n=x^3P_n
+$$
+
+follows by factoring out $P_n$ on the left and expanding the remaining cubic in $x$. The coefficient of $x^2$ on the right is zero. Taking the same coefficient on the left gives exactly R. J. Mathar's conjectured recurrence at index $n+3$, for every $n\ge0$. The displayed identity is also a direct certificate for D-finiteness. Robert Israel previously verified the analogous recurrence for A383700, which has factors starting at 1. This proof concerns the product starting at 3 in A383702.
+
+[Conjecture](https://oeis.org/A383702) · [Related result for A383700](https://oeis.org/A383700) · [Lean proof](../../proofs/oeis-a383702.lean) · [Lean statement](../../statements/oeis-a383702.lean)
+
 ## Verification
 
 Each [checker verdict](verification) records a successful local run of the project’s `tools/check.sh` against its pinned formal-conjectures revision `9097e2f90e66d2f6244209cb1c07f7120d17ec53`. For A395111 the main target is a conjunction, so the project audits the disproof. The separate [axiom audit for the density theorem](verification/395111-density.txt) checks its positive conclusion independently. The statement stubs retain the single placeholder required for human review. The proofs use only the standard Lean axioms listed in the verdicts.
