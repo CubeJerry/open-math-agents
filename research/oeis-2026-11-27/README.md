@@ -1,6 +1,6 @@
 # Proofs of OEIS conjectures
 
-These proofs use Lean 4.33.1 and the project's pinned Mathlib. The matching statement files give each proof its declared target. The project checks the axioms of `OMA.solution` to ensure the proof is independent of the statement placeholder.
+These proofs use Lean 4.33.1 and the project's pinned Mathlib. The matching statement files give each proof its declared target. The project checks the axioms of `OMA.solution` or `OMA.disproof` to ensure the proof is independent of the statement placeholder.
 
 ## A365383 — Least eventual period of a partition row
 
@@ -97,4 +97,30 @@ It remains to pass from fixed $q$ to all $n$. Every powerful $q$ has the form $u
 $\sum_{q\text{ powerful}}1/q\le(\sum_{u\ge1}u^{-2})(\sum_{v\ge1}v^{-3})<\infty$.
 Integers $n\le X$ whose powerful part $q$ exceeds $Q$ number at most $X\sum_{q>Q,\ q\text{ powerful}}1/q$. For $q\le Q$ the finitely many exceptional sets have density zero by the fixed-$q$ argument. Letting $Q$ tend to infinity gives natural density zero for the whole exceptional set.
 
-[Conjectures](https://oeis.org/A395111) · [Comparison sequence](https://oeis.org/A087188) · [Lean disproof of range equality](../../proofs/oeis-a395111.lean) · [Lean statement](../../statements/oeis-a395111.lean)
+[Conjectures](https://oeis.org/A395111) · [Comparison sequence](https://oeis.org/A087188) · [Lean proofs of both claims](../../proofs/oeis-a395111.lean) · [Lean statement](../../statements/oeis-a395111.lean)
+
+## A385590 — The Fibonacci triangle is a permutation
+
+Every positive integer occurs in exactly one cell. To see how the blocks fit together, put $a=F_t$, $b=F_{t+1}$ and $c=F_{t+2}=a+b$, for $t\ge0$. Block $t$ consists of the rows of lengths $c,c+1,\ldots,c+b-1$. Its entries are
+
+$$
+s_t+ar+bj,\qquad s_t=b^2+(t\bmod2),\qquad 0\le r<b,\quad 0\le j<c+r.
+$$
+
+Consider the larger set $S_t=s_t+\{au+bv:u,v\ge0\}$. Since $b>0$ and $a,b$ are coprime, every member has a unique representation $s_t+ar+bj$ with $0\le r<b$ and $j\ge0$. Existence follows by writing $u=bq+r$ and adding $aq$ to $v$. For uniqueness reduce modulo $b$ to recover $r$, then recover $j$ from equality of the integers.
+
+Cassini's identity gives $s_{t+1}=s_t+bc$. In the canonical representation of $S_t$, the entries outside block $t$ are precisely those with $j=c+r+k$, $k\ge0$. They are
+
+$$
+s_t+ar+b(c+r+k)=s_{t+1}+cr+bk.
+$$
+
+As $0\le r<b$, these fill exactly $S_{t+1}$ by the same division argument, now with coefficients $c,b$. Thus block $t$ is exactly $S_t\setminus S_{t+1}$, with each member occurring once. The first tail $S_0$ is the set of all positive integers since $(s_0,a,b)=(1,0,1)$. Also $s_t\to\infty$. Every positive integer therefore leaves the nested tails at exactly one block, which proves both existence and uniqueness.
+
+The entry also asks for an alternating binomial sum. Each row is affine in the zero-based column $j$. For row length $n\ge3$, both the constant and linear terms vanish in its alternating binomial transform, by evaluating $(1-x)^{n-1}$ and its derivative at $x=1$. The two short rows give $-1$ and $1$. This identity already has a published Lean proof. That work explicitly excludes the permutation conjecture, which is the result counted here.
+
+[Conjectures](https://oeis.org/A385590) · [Earlier work on the alternating sum](https://www.trureturing.org/research/oeis-a385590-alternating-binomial/) · [Lean proof](../../proofs/oeis-a385590.lean) · [Lean statement](../../statements/oeis-a385590.lean)
+
+## Verification
+
+Each [checker verdict](verification) records a successful local run of the project’s `tools/check.sh` against its pinned formal-conjectures revision `9097e2f90e66d2f6244209cb1c07f7120d17ec53`. For A395111 the main target is a conjunction, so the project audits the disproof. The separate [axiom audit for the density theorem](verification/395111-density.txt) checks its positive conclusion independently. The statement stubs retain the single placeholder required for human review. The proofs use only the standard Lean axioms listed in the verdicts.
