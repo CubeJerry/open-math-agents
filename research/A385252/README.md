@@ -18,7 +18,7 @@ Let $U_n$ count all words with fewer than $n$ zeros, including words with no zer
 
 | Zeros before extension | Correction to $9U_n$ | Reason |
 |---|---:|---|
-| $n-1$ | $-W_{n-1}$ | Appending two zeros exceeds the new cutoff. |
+| $n-1$ | $-W_{n-1}$ | Appending two zeros gives $n+1$ zeros, one too many. |
 | $n$ | $+4W_n$ | Appending two nonzero symbols now qualifies. |
 
 Consequently $U_{n+1}=9U_n+4W_n-W_{n-1}$. Put $b_n=2^n C_n$, where $C_n=\binom{2n}{n}/(n+1)$ is the Catalan number. The two boundary counts are $W_n=(n+1)b_n$ and $W_{n-1}=2nb_n$. Substitution gives the simpler recurrence
