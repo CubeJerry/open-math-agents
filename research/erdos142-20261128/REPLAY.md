@@ -6,31 +6,31 @@ These files prove an equidistribution consequence of the existing extremal-cardi
 
 Write `R = r_k(N)` for the exact upstream `Set.IsAPOfLengthFree.maxCard`. Suppose `k ≥ 3`, `N > 0`, and
 
-\[
+$$
 \left|\frac{r_k(x)}{R}-\frac{x}{N}\right|\le\varepsilon
 \quad (0\le x\le N).
-\]
+$$
 
 Every `k`-term-progression-free set `S ⊆ {1,…,N}` with `|S| ≥ (1−δ)R`, where `δ ≥ 0`, then satisfies
 
-\[
+$$
 \left|\frac{|S\cap[1,x]|}{R}-\frac{x}{N}\right|\le\varepsilon+\delta,
-\]
+$$
 
 and, simultaneously for every `0 ≤ a ≤ b ≤ N`,
 
-\[
+$$
 \left|\frac{|S\cap(a,b]|}{R}-\frac{b-a}{N}\right|\le2\varepsilon+\delta.
-\]
+$$
 
 The cardinalities are normalized by the optimum `R`. Taking `δ = 0` covers every extremizer.
 
 `Residues.lean` also proves, for `q ≥ 2` and `0 ≤ r < q`,
 
-\[
+$$
 \left|\frac{|\{x\in S:x\equiv r\pmod q\}|}{R}-\frac1q\right|
 \le q\left(\varepsilon+\frac1N\right)+\delta.
-\]
+$$
 
 This is a finite conditional bound. A separate logarithmic-density-one theorem for residue classes is not asserted in the Lean source.
 
@@ -38,11 +38,11 @@ This is a finite conditional bound. A separate logarithmic-density-one theorem f
 
 For fixed `ε > 0` and `δ ≥ 0`, let `E` contain the positive endpoints `N` for which **some** eligible near-extremizer and **some** interval violate the interval bound above. The formal proof gives
 
-\[
+$$
 \sum_{\substack{1\le N<X\\N\in E}}\frac1N
 \le C(\varepsilon)\sqrt{\log X}
 \qquad(X\ge2),
-\]
+$$
 
 uniformly in `k ≥ 3` and `δ ≥ 0`. Consequently this exceptional logarithmic mass, divided by `log X`, tends to zero. The quantification over sets and intervals is simultaneous; it is not a statement about one selected sequence of extremizers.
 

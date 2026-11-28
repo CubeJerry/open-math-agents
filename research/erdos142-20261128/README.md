@@ -47,6 +47,8 @@ Neither artificial sequence is the actual $r_k$. For example, $G(3)=3$, whereas 
 
 The structural results describe shape relative to $r_k(N)$ and do not determine its value. No matching upper and lower bound or explicit ratio-one formula was obtained. [analytic-bottleneck.md](analytic-bottleneck.md) records the primary sources, conditional parameter calculations, and unproved hypotheses. Even matching a leading exponential constant would leave a stronger relative-error question.
 
+[actual-r-gluing.md](actual-r-gluing.md) isolates one sufficient arithmetic input: an asymptotically lossless comparison between cyclic and interval three-term-progression-free maxima. The note proves the conditional gluing implications. The comparison itself is unproved here, and the note does not claim that it is easier than regular variation. Even if established, it would leave the amplitude undetermined.
+
 ## Reproduction and attribution
 
 - [Equidistribution.lean](Equidistribution.lean): interval discrepancy and the logarithmic-density conclusion.

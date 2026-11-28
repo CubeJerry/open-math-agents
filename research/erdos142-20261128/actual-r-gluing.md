@@ -8,12 +8,12 @@ Let `r(N)=r_3(N)` be the maximum size of a subset of `{1,...,N}` with no nontriv
 
 The following comparison would suffice for regular variation:
 
-\[
+$$
 \boxed{\displaystyle
 \frac{R(N)}{r(N)}\longrightarrow1
 \quad\text{as odd }N\longrightarrow\infty.}
 \tag{H}
-\]
+$$
 
 **Status: unproved in this investigation.** The scalar structural inequalities and near-extremizer interval equidistribution do not establish (H). No claim is made that (H) is necessary or an easier open problem than regular variation itself.
 
@@ -23,10 +23,10 @@ There is always `R(N)<=r(N)`: representatives of a cyclic progression-free set f
 
 For every odd positive `N`,
 
-\[
+$$
 r(2N)\ge2R(N).
 \tag{1}
-\]
+$$
 
 Take a cyclic extremizer `S` and let `B` consist of every integer in `{1,...,2N}` whose residue belongs to `S`. Each residue occurs twice, so `|B|=2|S|`.
 
@@ -34,16 +34,16 @@ If `a,a+d,a+2d` were a three-term progression in `B`, then `d>=1` and `2d<=2N-1`
 
 Interval splitting gives `r(2N)<=2r(N)`. Consequently (H) would give
 
-\[
+$$
 \frac{r(2N)}{r(N)}\longrightarrow2
 \tag{2}
-\]
+$$
 
 first along odd `N`. It would also hold along even `N`, because `r(N)-r(N-1)<=1`, `r(N)->infinity`, and
 
-\[
+$$
 r(2N)\ge r(2N-2)=(2-o(1))r(N-1)=(2-o(1))r(N).
-\]
+$$
 
 ## From doubling regularity to the entire interval profile
 
@@ -51,35 +51,35 @@ This implication uses only subadditivity, monotonicity, increments at most one, 
 
 Assume (2). Fix a power of two `B=2^w`. Iterating the doubling estimate for this fixed number of steps gives
 
-\[
+$$
 A_H:=\frac{r(BH)}{B r(H)}\longrightarrow1
 \qquad(H\longrightarrow\infty),
-\]
+$$
 
 and subadditivity gives `A_H<=1`. For any integer `0<=x<=BH`, put `q=floor(x/H)`. Splitting into intervals of length at most `H` gives
 
-\[
+$$
 r(x)\le(q+1)r(H),
 \qquad r(x)\ge r(BH)-(B-q)r(H).
-\]
+$$
 
 Since `q/B<=x/(BH)<=(q+1)/B`, these imply
 
-\[
+$$
 \sup_{0\le x\le BH}
 \left|\frac{r(x)}{r(BH)}-\frac{x}{BH}\right|
 \le\left(\frac1{A_H}-1\right)+\frac1{B A_H}.
 \tag{3}
-\]
+$$
 
 For arbitrary `N`, choose `H=floor(N/B)` and `N_0=BH`, so `0<=N-N_0<B`. The bounds `0<=r(N)-r(N_0)<=B` and `r(N)->infinity` show that replacing `N_0` by `N` changes the normalized profile by at most `B/r(N)+B/N`. Thus the limsup of the full profile error is at most `1/B`. Letting the fixed dyadic `B` grow proves
 
-\[
+$$
 \sup_{0\le x\le N}
 \left|\frac{r(x)}{r(N)}-\frac{x}{N}\right|
 \longrightarrow0.
 \tag{4}
-\]
+$$
 
 Taking `x=floor(lambda N)` gives `r(floor(lambda N))/r(N)->lambda` for `0<lambda<=1`. For `lambda>1`, apply (4) at `M=floor(lambda N)` with `x=N` and invert the resulting positive ratio. Hence `r` would be regularly varying with index one at every endpoint.
 
@@ -95,10 +95,10 @@ This example does not refute the asymptotic hypothesis (H); it prevents replacin
 
 Uniform prefix counts control one-point spatial marginals. Doubling an interval set introduces wraparound equations
 
-\[
+$$
 a+c-2b=\pm N
-\]
+$$
 
-that are absent from the original interval prohibition. The number and arrangement of such triples are not determined by prefix counts. A successful gluing argument must control these higher-order additive correlations, or construct cyclic sets by another method.
+that are absent from the original interval prohibition. These approximate prefix-count estimates do not themselves provide bounds on wraparound triples. A successful gluing argument must control these higher-order additive correlations, or construct cyclic sets by another method.
 
 Finally, (4) would say that the unknown factor `r(N)/N` varies slowly under fixed dilations. It would not identify that factor. The ratio-one asymptotic sought in Erdős 142 would remain an additional problem.

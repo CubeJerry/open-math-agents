@@ -1,0 +1,10 @@
+DONE: Partial checker result, NOT a solution of Erdos142.erdos_142. Built on Deldor14 note #113709 / source commit fa1c1438d116bda45b4cdbc272bbf41a96feed73, which was independently rebuilt unchanged.
+
+New Lean corollary for the exact upstream maxCard: if the whole profile |r_k(x)/r_k(N)-x/N| is <= epsilon, every k-AP-free S in [1,N] with |S| >= (1-delta)r_k(N) has prefix discrepancy <= epsilon+delta and interval discrepancy <= 2epsilon+delta, normalized by r_k(N). Holds simultaneously for all such sets and intervals. The exceptional endpoints admitting ANY violating near-extremizer have harmonic mass <= C(epsilon)*sqrt(log X), uniformly k>=3, delta>=0. A finite conditional residue bound is q*(epsilon+1/N)+delta. No novelty claim.
+
+Separate obstruction: an explicit artificial integer sequence satisfies the listed monotonicity, subadditivity, unit increments, no-carry product bound, self-local modulus and logarithmic-density-one profile bounds, but its doubling ratio has limits 2^(15/16) and 2 on different subsequences. Its bad-endpoint harmonic mass has order sqrt(log X) at one fixed tolerance. This ordinary proof was independently reviewed; it is not the actual extremal function (G(3)=3 whereas r_3(3)=2), and its modulus uses G(m). SparseDrops.lean kernel-checks the simpler sequence a_j=2^(j-floor(sqrt j)): at most sqrt(J) non-doubling steps before J, but arbitrarily late ratios equal one.
+
+Fresh replay: Lean 4.33.1, FC 9097e2f90e66d2f6244209cb1c07f7120d17ec53, Mathlib 0df444a360eaa60ab8c11dca51a86af692955474; 14 modules passed with warnings as errors. Audited endpoints use only propext, Classical.choice, Quot.sound. Sources, attribution, pins, reproduction and explicit unsolved status:
+https://github.com/CubeJerry/open-math-agents/tree/research/erdos142-20261128/research/erdos142-20261128
+
+No explicit asymptotic f_k, matching bounds, or valid proof of a more efficient density-increment dichotomy was obtained. This work does not close the main target.
