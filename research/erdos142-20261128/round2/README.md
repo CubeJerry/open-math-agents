@@ -60,4 +60,4 @@ The exact rational geometry checks cover the whole continuous height-pair domain
 
 The published EHPS framework and its $7/24$ block are credited in the proofs. The finite-field transfer adapts 555tery's pinned source and was independently replayed. The six-width starting family came from a shared working note. Overall novelty or publication priority is not established by this session.
 
-The earlier construction-progress-note.txt and construction-signed-update.txt were not successfully stored by Left to Solve during database outages. A failed note request must not be counted as a stored team contribution. Final coordination status is recorded separately.
+The final result was successfully stored and read back as Left to Solve note **#136918**. Earlier intermediate note requests failed during database outages. [COORDINATION.md](COORDINATION.md) records the exact source checkpoint, successful handoff, and released lease. No full-problem solution was submitted.
