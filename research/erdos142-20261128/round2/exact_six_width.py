@@ -45,4 +45,4 @@ if __name__=='__main__':
  out=[]
  for D in [24,36,48,60,72,84,96,120,192,288]:
   v=build(D);out.append(v);print({k:x for k,x in v.items() if k!='arrays'})
- Path('round2/exact-six-width-step-profiles.json').write_text(json.dumps(out,indent=2)+'\n')
+ Path(__file__).with_name('exact-six-width-step-profiles.json').write_text(json.dumps(out,indent=2)+'\n')

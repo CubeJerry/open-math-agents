@@ -1,0 +1,44 @@
+[
+  {
+    "p": "69/56",
+    "q": "25/28",
+    "w": "3/28",
+    "zero_crossing": "28/69",
+    "cutoff": "50/119",
+    "lower_crossing": "50/119",
+    "upper_breakpoints": [
+      "0",
+      "12/119",
+      "19/119",
+      "25/119",
+      "28/69",
+      "50/119"
+    ],
+    "area": "579/1904",
+    "area_decimal": 0.30409663865546216,
+    "excess_over_prior_claim": "53/1428000",
+    "exact_vertex_inequalities": 207,
+    "minimum_slack": "0"
+  },
+  {
+    "p": "6/5",
+    "q": "9/10",
+    "w": "17/140",
+    "zero_crossing": "5/12",
+    "cutoff": "41/98",
+    "lower_crossing": "41/98",
+    "upper_breakpoints": [
+      "0",
+      "16/147",
+      "23/147",
+      "10/49",
+      "5/12",
+      "41/98"
+    ],
+    "area": "16687/54880",
+    "area_decimal": 0.3040634110787172,
+    "excess_over_prior_claim": "1/257250",
+    "exact_vertex_inequalities": 215,
+    "minimum_slack": "0"
+  }
+]

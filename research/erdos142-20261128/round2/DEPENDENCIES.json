@@ -1,0 +1,177 @@
+{
+  "lean_toolchain": "leanprover/lean4:v4.33.1",
+  "formal_conjectures": {
+    "repository": "https://github.com/google-deepmind/formal-conjectures",
+    "commit": "9097e2f90e66d2f6244209cb1c07f7120d17ec53",
+    "ap_basic_sha256": "62f0a0987d49c5dbfd7b4f82a4f3dd4faba7ad545c676df06d0cda009567b5c3"
+  },
+  "mathlib": {
+    "repository": "https://github.com/leanprover-community/mathlib4",
+    "commit": "0df444a360eaa60ab8c11dca51a86af692955474"
+  },
+  "external_geometry": {
+    "author": "555tery",
+    "repository": "https://github.com/555tery/quandle-orbit-series",
+    "commit": "21274b81d4fec2b0e344940ae053c925410dbacf",
+    "path": "lean/QuandleResearch/Proofs/Erdos142/Geometry.lean",
+    "original_sha256": "7e10860313232c8918e74295395769d7fbc20a040ff243a9f931a663083c940a",
+    "claim": "https://cairn-commons.com/claims/C-58"
+  },
+  "modules": [
+    {
+      "name": "ClaimGeometryPinned",
+      "sha256": "5e0f94c2b0ea45f8401dae5a4a2b39b08550c563c94c2933a34a7f7cb659288f",
+      "required_axiom_audits": [
+        "QuandleResearch.Erdos142.potential_gap",
+        "QuandleResearch.Erdos142.finite_block_density",
+        "QuandleResearch.Erdos142.roth_finite_parameters",
+        "QuandleResearch.Erdos142.roth_eventual_of_constant",
+        "QuandleResearch.Erdos142.erdos142_explicit_finite_sets"
+      ]
+    },
+    {
+      "name": "BlockCertificate",
+      "sha256": "7dc8905797c4bbc331d4cba29bc54c62f27e22b5f4578f0354f21fd57a1b57c0",
+      "required_axiom_audits": [
+        "shell_shortBox",
+        "roth_finite_parameters"
+      ]
+    },
+    {
+      "name": "AsymptoticCertificate",
+      "sha256": "6712250752e4d99385aee618a4ed02722081171aec5ca85a7ca5029c7f15ae96",
+      "required_axiom_audits": [
+        "roth_integer_parameters",
+        "roth_sqrt_bound",
+        "roth_eventual_of_constant"
+      ]
+    },
+    {
+      "name": "StepCells",
+      "sha256": "e23c7730a6fca59663f890f5388abc47dba0c8752cd3dbe1b7575cc646a40011",
+      "required_axiom_audits": [
+        "cell_up_index",
+        "cell_separated"
+      ]
+    },
+    {
+      "name": "IntegerWraps",
+      "sha256": "4820501fe02211001d8f734a3b8cfb32c184321e327bf34dd50b21bd0c854374",
+      "required_axiom_audits": []
+    },
+    {
+      "name": "LayerGeometryCore",
+      "sha256": "ba762bb9dc2bb077ee0ab4c115cff1edcd205a51b4468d5bde21a6903a87aad3",
+      "required_axiom_audits": [
+        "geometry_potential_gap"
+      ]
+    },
+    {
+      "name": "LayerGeometry",
+      "sha256": "d04ca464b81ba6de4b1addf24aaf7c9f8c2cb3cbf542a3b5452e97481b0e6833",
+      "required_axiom_audits": [
+        "geometry_potential_gap",
+        "certificateOfGeometry"
+      ]
+    },
+    {
+      "name": "SixWidthsAngular",
+      "sha256": "f42362a056d3e263c785a5c1f8bebcd13850e90f53ec4b293d24193a4127e185",
+      "required_axiom_audits": [
+        "upper_width_jensen",
+        "lower_width_jensen"
+      ]
+    },
+    {
+      "name": "SixWidthsNoUp",
+      "sha256": "9c248b72bdfc863f3c806ee2636458e401cdf65387caa778f5f46e7dce8d5690",
+      "required_axiom_audits": [
+        "lower_lower_no_up",
+        "lower_upper_no_up"
+      ]
+    },
+    {
+      "name": "StepProfile",
+      "sha256": "d90dd16a00f6b00a8fdd3d648da3be172877b9cc923d5580d98dcd195fae1c51",
+      "required_axiom_audits": [
+        "profileGeometry",
+        "profile_no_upward",
+        "profile_angular_or_separated"
+      ]
+    },
+    {
+      "name": "SixWidths192Numerators",
+      "sha256": "a0790b863693285fc74edf1540d2c3373bde961d6ea8cff6aed795a462cebae9",
+      "required_axiom_audits": [
+        "lower_numerators",
+        "upper_numerators",
+        "angular_numerators",
+        "ll_numerators",
+        "lh_numerators",
+        "totalColumns_eq"
+      ]
+    },
+    {
+      "name": "SixWidths192",
+      "sha256": "9ef24657584052dd103f92f511ad94c802f558add4540e8833f324638e9100f2",
+      "required_axiom_audits": [
+        "valid192",
+        "geometry192",
+        "potentialCoeff_pays",
+        "lower_rectangle_mem",
+        "positive_rectangle_mem",
+        "negative_rectangle_mem"
+      ]
+    },
+    {
+      "name": "SignedUpperExclusion",
+      "sha256": "557572fe8517275d030eb2a2e99f9bd0ed23353920667b312c8724a3a7ce063d",
+      "required_axiom_audits": [
+        "lower_upper_no_up_signed",
+        "lower_upper_no_up_of_arc_widths",
+        "lower_arc_bounds_signed"
+      ]
+    },
+    {
+      "name": "GridDensity",
+      "sha256": "983948046ec2ab049a50235f6bb3b96d8b4729ed9b5f49a484e017739fbb8ead",
+      "required_axiom_audits": [
+        "gridBlock_card_lower",
+        "gridBlock_density",
+        "uniformDensity_of_cells"
+      ]
+    },
+    {
+      "name": "CellFamily192",
+      "sha256": "89d41b73f1dbbbbcb61b96b5b398396100f1da40d8b499a2ab4fc5a1d82f97ba",
+      "required_axiom_audits": [
+        "cells192",
+        "cellIndex_card",
+        "density_three_tenths"
+      ]
+    },
+    {
+      "name": "RothBridge",
+      "sha256": "7cae7bb283ca187bb5cc9ef735aa778e24dbced1df40ad35443360531fe0f305",
+      "required_axiom_audits": [
+        "rothNumberNat_le_maxCard_three"
+      ]
+    },
+    {
+      "name": "SixWidthsRoth",
+      "sha256": "924e5bb9f93836f71e42d9f7d072d93cf1cdccce157ccd3337c5e43fa2426106",
+      "required_axiom_audits": [
+        "roth_eventual_three_tenths"
+      ]
+    },
+    {
+      "name": "CombinedLowerBound",
+      "sha256": "061fa632f0eda45ea54f95ecf5d669c812460f33f70aa0dfd66830c02cc1185b",
+      "required_axiom_audits": [
+        "r_three_eventual_of_constant",
+        "r_three_eventual_epsilon",
+        "r_three_leading_constant_improvement"
+      ]
+    }
+  ]
+}

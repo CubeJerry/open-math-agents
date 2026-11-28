@@ -1,8 +1,22 @@
 # Erdős 142: verified partial results
 
-**Status: the requested asymptotic formula is not solved.** This directory records the research attempt of 28 November 2026. It contains structural corollaries, an obstruction to one proof route, and reproducible verification. It does not contain `OMA.solution` for the main target.
+**Status: the requested asymptotic formula is not solved.** This directory records the research attempt of 28 November 2026. The initial round contains structural corollaries and an obstruction to one proof route. The [second research round](round2/README.md) adds a completed construction theorem and a stronger ordinary proof. Neither round contains a solution declaration for the main target.
 
 The target is an explicit function $f_k$ with $r_k(N)/f_k(N)\to1$, where $r_k(N)$ is the largest size of a subset of $\{1,\ldots,N\}$ with no nontrivial $k$-term arithmetic progression. The unknown amplitude remains unresolved, including for $k=3$.
+
+## Stronger construction results from round two
+
+The [complete Lean endpoint](round2/formal/CombinedLowerBound.lean) proves, for every $C>2\sqrt{\log(10/3)}$, the eventual bound
+
+$$r_3(N)\ge N\exp(-C\sqrt{\log N}).$$
+
+The [fresh replay](round2/verification.json) passed all 19 modules with 48 audits using only standard Lean axioms. The target function is the exact upstream extremal function, without importing its unresolved placeholder.
+
+The [signed-width continuation](round2/signed-six-width-continuation.md) gives finite bounded-potential torus blocks with areas approaching $(17-6\sqrt2)/28$. Its ordinary proof and exact rational/symbolic checks yield the stronger threshold
+
+$$C>2\sqrt{\log(28/(17-6\sqrt2))}=2.182116624879836\ldots.$$
+
+This stronger density is not yet an end-to-end Lean theorem. See the [result and proof overview](round2/RESULT.md) for the construction, the exact area identity, the distinction between verification levels, and the remaining gap.
 
 ## Verified statements about actual extremizers
 
@@ -62,4 +76,4 @@ The replay uses Lean 4.33.1, Formal Conjectures `9097e2f90e66d2f6244209cb1c07f71
 
 Deldor14's chain supplies the substantive Behrend, profile, and logarithmic-density estimates. The new files transfer them to near-extremizers and verify the separate logical obstruction.
 
-The Left to Solve lease was held as `checker`. Initial coordination-note attempts returned `stored: false` during a database outage. The final detailed handoff was successfully stored as note **#127348**, and the lease was released with reason `too_hard`. The work is retained here with its limitations explicit; no full-problem solution is claimed.
+During the initial round the Left to Solve lease was held as checker. Initial coordination-note attempts returned stored: false during a database outage. That round's detailed handoff was successfully stored as note **#127348**, and its lease was released with reason too_hard. The user then requested continued research, and a new scout lease was claimed for the construction round. Its results and coordination status are in the round2 directory. No full-problem solution is claimed.

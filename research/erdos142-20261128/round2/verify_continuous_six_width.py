@@ -62,4 +62,4 @@ def verify(p,q,w):
 if __name__=='__main__':
  out=[verify(F(6,5),F(9,10),F(17,140)),verify(F(241,200),F(903,1000),F(121,1000)),verify(F(603,500),F(903,1000),F(1207,10000)),verify(F(211,175),F(158,175),F(6242,51695)),verify(F(1125,932),F(710,787),F(162359479,1353277980))]
  for x in out:print(json.dumps(x))
- Path('round2/continuous-certificates.json').write_text(json.dumps(out,indent=2)+'\n')
+ Path(__file__).with_name('continuous-certificates.json').write_text(json.dumps(out,indent=2)+'\n')

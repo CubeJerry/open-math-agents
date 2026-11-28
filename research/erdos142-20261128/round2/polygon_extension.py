@@ -49,7 +49,7 @@ def clip(poly, a, b, c):
 
 
 def area(poly):
-    return sum(cross(p,q) for p,q in zip(poly,poly[1:]+poly[:1]))/2
+    return sum((cross(p,q) for p,q in zip(poly,poly[1:]+poly[:1])),F(0))/2
 
 
 def minkowski(a,b):
@@ -182,6 +182,15 @@ def facet_patch(tri,epsilon=F(1,1000)):
 def doubling_preimages(poly):
     # All patches lie in [0,1) x [-1/2,1/2).
     return [shift(scale(poly,F(1,2)),s,a) for s,a in product([F(0),F(1,2)],[F(0),-F(1,2)])]
+
+
+def upper_preimages(poly):
+    return [shift(scale(poly,F(1,2)),F(1,2),a) for a in [F(0),-F(1,2)]]
+
+
+def upper_patch(tri,p,q,w,eta=F(1,1000)):
+    b=1/(2*p);h=(1-w)/(p+q)
+    return clip(tri,-1,0,-2*(b+eta*(h-b)))
 
 
 def verify_extension(p,q,w):

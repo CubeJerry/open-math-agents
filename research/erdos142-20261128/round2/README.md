@@ -1,54 +1,63 @@
-# Second research round: explicit torus constructions
+# Erdős 142: construction results from the second research round
 
-**The full Erdős 142 asymptotic formula is not solved. Work is continuing.**
+**The requested ratio-one asymptotic remains unsolved.** This directory contains a completed Lean lower-bound theorem for the exact upstream extremal function and a stronger ordinary mathematical construction.
 
-This checkpoint records substantive construction progress after the initial structural round. It contains an ordinary mathematical proof, independently checked rational geometry, and exact certificates. The stronger numerical endpoint is not yet claimed to be a complete Lean theorem.
+## Main results
 
-## Construction result
+Let $r_3(N)$ be the maximum size of a three-term-progression-free subset of $\{1,\ldots,N\}$. All logarithms below are natural.
 
-The six-width block family in Left to Solve note 110197 admits a free lower-slice intercept that its stated numerical optimum missed. A simple exact profile has limiting area
+1. **Complete Lean theorem.** For every
+   $$
+   C>2\sqrt{\log(10/3)}=2.194513890888765\ldots,
+   $$
+   eventually $r_3(N)\ge N\exp(-C\sqrt{\log N})$.
+   The theorem is stated directly for the upstream function
+   Set.IsAPOfLengthFree.maxCard 3 N, definitionally Erdos142.r 3 N.
 
-$$14303/47040=0.3040603741496598\ldots,$$
+2. **Stronger ordinary proof.** The signed six-width construction gives finite bounded-potential torus blocks with areas arbitrarily close to
+   $$
+   E_*=\frac{17-6\sqrt2}{28}=0.304097093777193918\ldots.
+   $$
+   Consequently the same eventual lower bound holds for every
+   $$
+   C>2\sqrt{\log\!\left(\frac{28}{17-6\sqrt2}\right)}
+     =2.182116624879836\ldots.
+   $$
+   This stronger density has an ordinary proof and exact rational/symbolic audits. It has **not** been assembled into the completed Lean chain.
 
-which exceeds the note's $25541/84000$ by exactly $1/1176000$.
+The crucial change is to permit signed offsets from the upper arc centers. Their actual interval lengths remain positive. Continuing those arcs beyond an unnecessary old cutoff adds two triangles, equivalent to two upper doubling preimages of a triangular hole in the old torus sumset. A simple rational parameter choice gives the limiting area $579/1904$.
 
-Its sumset has a genuine triangular hole. Filling part of that hole using a new potential, rather than only changing the original widths, gives blocks whose areas approach
+## Start here
 
-$$A_* = \frac{190982127009695893}{628094878940430000}
-=0.30406572862347614\ldots.$$
+- [RESULT.md](RESULT.md): self-contained result, construction, proof mechanism, exact optimization, and limitations.
+- [signed-six-width-continuation.md](signed-six-width-continuation.md): complete stronger ordinary proof.
+- [formal/CombinedLowerBound.lean](formal/CombinedLowerBound.lean): final kernel-checked theorem.
+- [REPLAY.md](REPLAY.md), [DEPENDENCIES.json](DEPENDENCIES.json), and [replay_formal.py](replay_formal.py): pinned reproduction instructions.
+- [verification.json](verification.json): successful fresh build of 19 modules with 48 axiom audits.
+- [ATTRIBUTION.md](ATTRIBUTION.md): exact credit and changes to the external proof on which the transfer builds.
 
-The standard block-to-progression-free-set transfer therefore gives, for every
+![The rational construction and its triangular extension](torus-extension.png)
 
-$$C>2\sqrt{\log(1/A_*)}=2.182211161523\ldots,$$
+The figure depicts ideal polygon regions. Positive finite-layer gaps are omitted in the picture and retained in every actual bounded-potential certificate.
 
-the eventual lower bound
+## Verification status
 
-$$r_3(N)\ge N\exp(-C\sqrt{\log N}).$$
+The fresh isolated replay passed on 28 November 2026 using Lean 4.33.1, with warnings treated as errors. It rebuilt the upstream AP.Basic source and all 18 local modules from source in a new directory, reusing only the installed dependency cache. All 48 printed theorem audits use at most propext, Classical.choice, and Quot.sound. No placeholder theorem from the problem file is imported.
 
-The constant $A_*$ is a **supremum of the constructed finite-potential blocks**, obtained by taking finite-layer approximations and then a positive parameter toward zero. The proof does not set a zero separation or an unbounded potential inside a single certificate.
+The exact rational geometry checks cover the whole continuous height-pair domain by a line-arrangement vertex argument. The signed rational benchmark passes 207 inequalities and has area $579/1904$. A separate polygon verifier passes 60 periodic Minkowski exclusions across four rational examples. Direct symbolic integration verifies both the signed area expression and its square decomposition. Floating-point optimization is exploratory evidence only.
 
-This is a lower bound; it does not identify the true order of $r_3(N)$ or a ratio-one asymptotic. Novelty beyond the sources and shared notes checked during this session is not asserted.
+## Other research files
 
-## Proof and verification files
+- [six-width-geometry.md](six-width-geometry.md): finite-layer midpoint exclusions and quadratic potential, including the folded upper midpoint case.
+- [six-width-analytic-benchmark.md](six-width-analytic-benchmark.md): the earlier unsigned family and the improvement over shared note 110197.
+- [torus-hole-augmentation.md](torus-hole-augmentation.md): independent hole-extension proofs, including the stronger one-half addition.
+- [triangle-hole-potential-extension.md](triangle-hole-potential-extension.md): the earlier one-seventh extension; valid but superseded numerically.
+- [verify_signed_six_width.py](verify_signed_six_width.py) and [signed-continuous-certificates.json](signed-continuous-certificates.json): exact signed-profile audit.
+- [derive_signed_six_width.py](derive_signed_six_width.py): direct symbolic integration and square identity.
+- [verify_augmentations.py](verify_augmentations.py) and [augmentation-certificates.json](augmentation-certificates.json): independent exact polygon geometry.
+- [exact_six_width.py](exact_six_width.py) and [exact-six-width-step-profiles.json](exact-six-width-step-profiles.json): finite rational step profiles.
+- [nonuniform_signed_lp.py](nonuniform_signed_lp.py) and [nonuniform-signed-lp-results.json](nonuniform-signed-lp-results.json): broader numerical search, without a global optimality claim.
 
-- `six-width-analytic-benchmark.md`: explicit profiles, all-real-height inequalities, area formula and finite-layer approximation.
-- `six-width-geometry.md`: the finite-layer quadratic Jensen certificate, including the permitted upper cross-label midpoint.
-- `triangle-hole-potential-extension.md`: the extension lemma, all old/new midpoint cases, the one-seventh patch, and exact final parameters.
-- `verify_continuous_six_width.py` and `continuous-certificates.json`: independent Fraction-only checks of all continuous profile inequalities using the vertices of their full line arrangement. This verifies the whole domain, not just a sample of midpoint pairs.
-- `polygon_extension.py` and `hole-certificates.json`: exact convex-hull, clipping and periodic Minkowski-sum checks for the triangular hole. The stored constant-offset examples use the earlier one-thirteenth patch; the stronger one-seventh patch is proved in the extension note. A final consolidated replay script is still being assembled.
-- `exact_six_width.py` and `exact-six-width-step-profiles.json`: exact finite step profiles, including a D=192 profile with ungapped area $172387/573440>0.3006$.
-- `derive_six_width_free_intercept.py` and `derive_augmented_six_width.py`: symbolic derivations and parameter optimization. Numerical stationarity is not claimed to be global optimality.
+The published EHPS framework and its $7/24$ block are credited in the proofs. The finite-field transfer adapts 555tery's pinned source and was independently replayed. The six-width starting family came from a shared working note. Overall novelty or publication priority is not established by this session.
 
-## Formal proof status at this checkpoint
-
-The generic finite block certificate, tensor/shell/slope transfer, and asymptotic lower-bound transfer have been checked in Lean 4.33.1 with only `propext`, `Classical.choice`, and `Quot.sound`. The six-width angular and no-upward geometric lemmas also check. The concrete geometry, finite-grid density, and a conservative density $3/10$ endpoint are being assembled and replayed. No source with an unchecked endpoint is presented here as kernel verified.
-
-The formal transfer adapts the independently replayed work of 555tery:
-
-https://github.com/555tery/quandle-orbit-series/blob/21274b81d4fec2b0e344940ae053c925410dbacf/lean/QuandleResearch/Proofs/Erdos142/Geometry.lean
-
-The earlier block framework and published $7/24$ construction are from Elsholtz–Hunter–Proske–Sauermann:
-
-https://arxiv.org/abs/2406.12290
-
-`construction-progress-note.txt` was submitted to Left to Solve, but its API returned `stored:false` during a database outage. It must not be described as a successfully stored team note.
+The earlier construction-progress-note.txt and construction-signed-update.txt were not successfully stored by Left to Solve during database outages. A failed note request must not be counted as a stored team contribution. Final coordination status is recorded separately.

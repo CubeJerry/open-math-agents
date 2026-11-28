@@ -1,0 +1,198 @@
+{
+  "lean_toolchain": "leanprover/lean4:v4.33.1",
+  "formal_conjectures": {
+    "repository": "https://github.com/google-deepmind/formal-conjectures",
+    "commit": "9097e2f90e66d2f6244209cb1c07f7120d17ec53",
+    "ap_basic_path": "FormalConjecturesForMathlib/Combinatorics/AP/Basic.lean",
+    "ap_basic_sha256": "62f0a0987d49c5dbfd7b4f82a4f3dd4faba7ad545c676df06d0cda009567b5c3"
+  },
+  "packages": {
+    "mathlib": {
+      "repository": "https://github.com/leanprover-community/mathlib4",
+      "commit": "0df444a360eaa60ab8c11dca51a86af692955474"
+    },
+    "plausible": {
+      "repository": "https://github.com/leanprover-community/plausible",
+      "commit": "b7eb3304aeae834b12dda98993a37f6a41f6f0bb"
+    },
+    "LeanSearchClient": {
+      "repository": "https://github.com/leanprover-community/LeanSearchClient",
+      "commit": "5f4d51b81cbd3f6b32b156bfad9056621a040404"
+    },
+    "importGraph": {
+      "repository": "https://github.com/leanprover-community/import-graph",
+      "commit": "16f02aa7642864af59f1ff0e384a015994db9118"
+    },
+    "proofwidgets": {
+      "repository": "https://github.com/leanprover-community/ProofWidgets4",
+      "commit": "4be2e3d5087eeb272cf5a8853b8f9dd025ef5957"
+    },
+    "aesop": {
+      "repository": "https://github.com/leanprover-community/aesop",
+      "commit": "3448c0bcc5ce01b2d1546e483ec3620e32df3d0e"
+    },
+    "Qq": {
+      "repository": "https://github.com/leanprover-community/quote4",
+      "commit": "92c15be17b7caf78c2ad767ec40f89052d908d81"
+    },
+    "batteries": {
+      "repository": "https://github.com/leanprover-community/batteries",
+      "commit": "4488d40d070b9700d4d5a6aa342f0d40c31b2a2d"
+    },
+    "Cli": {
+      "repository": "https://github.com/leanprover/lean4-cli",
+      "commit": "6130a47896ce867c6a4a55373441e59e565bad0f"
+    }
+  },
+  "external_proof": {
+    "author": "555tery",
+    "repository": "https://github.com/555tery/quandle-orbit-series",
+    "commit": "21274b81d4fec2b0e344940ae053c925410dbacf",
+    "path": "lean/QuandleResearch/Proofs/Erdos142/Geometry.lean",
+    "claim": "https://cairn-commons.com/claims/C-58",
+    "artifact": "https://cairn-commons.com/api/v1/artifacts/d7373d22-c216-48ff-8ba2-96a544c3faac",
+    "declared_license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "original_file": "ClaimGeometryOriginal.lean",
+    "original_sha256": "7e10860313232c8918e74295395769d7fbc20a040ff243a9f931a663083c940a",
+    "pinned_file": "ClaimGeometryPinned.lean",
+    "pinned_sha256": "5e0f94c2b0ea45f8401dae5a4a2b39b08550c563c94c2933a34a7f7cb659288f",
+    "changes": [
+      "Replace dite_eq_right hn with dif_neg hn in one proof.",
+      "Replace import Mathlib with three narrower imports: Mathlib.Combinatorics.Additive.AP.Three.Behrend, Mathlib.Data.ZMod.Basic, Mathlib.Tactic.",
+      "Append five endpoint #print axioms commands."
+    ]
+  },
+  "modules": [
+    "FormalConjecturesForMathlib/Combinatorics/AP/Basic",
+    "ClaimGeometryPinned",
+    "BlockCertificate",
+    "AsymptoticCertificate",
+    "StepCells",
+    "IntegerWraps",
+    "LayerGeometryCore",
+    "SixWidthsAngular",
+    "SixWidthsNoUp",
+    "StepProfile",
+    "SixWidths192Numerators",
+    "SixWidths192",
+    "SignedUpperExclusion",
+    "LayerGeometry",
+    "GridDensity",
+    "CellFamily192",
+    "SixWidthsRoth",
+    "RothBridge",
+    "CombinedLowerBound"
+  ],
+  "local_imports": {
+    "ClaimGeometryPinned": [
+      "Mathlib.Combinatorics.Additive.AP.Three.Behrend",
+      "Mathlib.Data.ZMod.Basic",
+      "Mathlib.Tactic"
+    ],
+    "BlockCertificate": [
+      "ClaimGeometryPinned"
+    ],
+    "AsymptoticCertificate": [
+      "BlockCertificate"
+    ],
+    "StepCells": [
+      "Mathlib.Data.Real.Basic",
+      "Mathlib.Tactic.Linarith",
+      "Mathlib.Tactic.NormNum",
+      "Mathlib.Tactic.Positivity",
+      "Lean.Elab.Tactic.Omega"
+    ],
+    "IntegerWraps": [
+      "StepCells"
+    ],
+    "LayerGeometryCore": [
+      "StepCells"
+    ],
+    "SixWidthsAngular": [
+      "IntegerWraps"
+    ],
+    "SixWidthsNoUp": [
+      "IntegerWraps"
+    ],
+    "StepProfile": [
+      "StepCells",
+      "LayerGeometryCore",
+      "SixWidthsAngular",
+      "SixWidthsNoUp"
+    ],
+    "SixWidths192Numerators": [
+      "Mathlib.Algebra.BigOperators.Group.Finset.Basic",
+      "Mathlib.Algebra.Group.Nat.Defs",
+      "Mathlib.Data.Finset.Range",
+      "Lean.Elab.Tactic.Omega"
+    ],
+    "SixWidths192": [
+      "StepProfile",
+      "SixWidths192Numerators"
+    ],
+    "SignedUpperExclusion": [
+      "SixWidthsNoUp"
+    ],
+    "LayerGeometry": [
+      "BlockCertificate",
+      "LayerGeometryCore"
+    ],
+    "GridDensity": [
+      "LayerGeometry",
+      "AsymptoticCertificate"
+    ],
+    "CellFamily192": [
+      "GridDensity",
+      "SixWidths192"
+    ],
+    "SixWidthsRoth": [
+      "CellFamily192"
+    ],
+    "RothBridge": [
+      "FormalConjecturesForMathlib.Combinatorics.AP.Basic",
+      "Mathlib.Combinatorics.Additive.AP.Three.Defs",
+      "Lean.Elab.Tactic.Omega"
+    ],
+    "CombinedLowerBound": [
+      "SixWidthsRoth",
+      "RothBridge"
+    ]
+  },
+  "files": {
+    "ClaimGeometryPinned.lean": "5e0f94c2b0ea45f8401dae5a4a2b39b08550c563c94c2933a34a7f7cb659288f",
+    "BlockCertificate.lean": "7dc8905797c4bbc331d4cba29bc54c62f27e22b5f4578f0354f21fd57a1b57c0",
+    "AsymptoticCertificate.lean": "6712250752e4d99385aee618a4ed02722081171aec5ca85a7ca5029c7f15ae96",
+    "StepCells.lean": "e23c7730a6fca59663f890f5388abc47dba0c8752cd3dbe1b7575cc646a40011",
+    "IntegerWraps.lean": "4820501fe02211001d8f734a3b8cfb32c184321e327bf34dd50b21bd0c854374",
+    "LayerGeometryCore.lean": "ba762bb9dc2bb077ee0ab4c115cff1edcd205a51b4468d5bde21a6903a87aad3",
+    "SixWidthsAngular.lean": "f42362a056d3e263c785a5c1f8bebcd13850e90f53ec4b293d24193a4127e185",
+    "SixWidthsNoUp.lean": "9c248b72bdfc863f3c806ee2636458e401cdf65387caa778f5f46e7dce8d5690",
+    "StepProfile.lean": "d90dd16a00f6b00a8fdd3d648da3be172877b9cc923d5580d98dcd195fae1c51",
+    "SixWidths192Numerators.lean": "a0790b863693285fc74edf1540d2c3373bde961d6ea8cff6aed795a462cebae9",
+    "SixWidths192.lean": "9ef24657584052dd103f92f511ad94c802f558add4540e8833f324638e9100f2",
+    "SignedUpperExclusion.lean": "557572fe8517275d030eb2a2e99f9bd0ed23353920667b312c8724a3a7ce063d",
+    "LayerGeometry.lean": "d04ca464b81ba6de4b1addf24aaf7c9f8c2cb3cbf542a3b5452e97481b0e6833",
+    "GridDensity.lean": "983948046ec2ab049a50235f6bb3b96d8b4729ed9b5f49a484e017739fbb8ead",
+    "CellFamily192.lean": "89d41b73f1dbbbbcb61b96b5b398396100f1da40d8b499a2ab4fc5a1d82f97ba",
+    "SixWidthsRoth.lean": "924e5bb9f93836f71e42d9f7d072d93cf1cdccce157ccd3337c5e43fa2426106",
+    "RothBridge.lean": "7cae7bb283ca187bb5cc9ef735aa778e24dbced1df40ad35443360531fe0f305",
+    "CombinedLowerBound.lean": "061fa632f0eda45ea54f95ecf5d669c812460f33f70aa0dfd66830c02cc1185b",
+    "ClaimGeometryOriginal.lean": "7e10860313232c8918e74295395769d7fbc20a040ff243a9f931a663083c940a"
+  },
+  "allowed_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "final_audit_endpoints": [
+    "Erdos142BlockCertificate.SixWidths192.density_three_tenths",
+    "Erdos142BlockCertificate.SixWidths192.roth_eventual_three_tenths",
+    "Erdos142Bridge.rothNumberNat_le_maxCard_three",
+    "Erdos142LowerBound.r_three_eventual_of_constant",
+    "Erdos142LowerBound.r_three_eventual_epsilon",
+    "Erdos142LowerBound.r_three_leading_constant_improvement",
+    "Erdos142BlockCertificate.lower_upper_no_up_of_arc_widths",
+    "Erdos142BlockCertificate.lower_arc_bounds_signed"
+  ]
+}

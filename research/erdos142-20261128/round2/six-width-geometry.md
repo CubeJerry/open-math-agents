@@ -101,10 +101,10 @@ $$
 Conditions (LH) separate the positive interval's upper endpoint and negative interval's lower endpoint from the adjacent doubled-midpoint intervals. They also exclude the other integer translates. For example, `2L_i+2max(P_t,U_t)<=1-M_j` and `V_j<=1` imply
 
 $$
-\frac14-\frac{2L_i+V_j}{4}\ge\frac{\max(P_t,U_t)}2,
+\frac14-\frac{2L_i+V_j}{4}\ge\frac{\max(P_t,U_t)}2-\frac14,
 $$
 
-which is safely above the negative half-integer interval's upper endpoint. The opposite bound follows using the `W_i` inequality and `U_j<=1`.
+which is strictly above the negative half-integer interval's upper endpoint `−1/2+max(P_t,U_t)/2`. The opposite bound follows using the `W_i` inequality and `U_j<=1`. An earlier draft omitted the `−1/4` term in this auxiliary lower bound; the weaker bound displayed here is the one implied by the hypotheses and is sufficient for the exclusion.
 
 ## Within-cell potential
 
