@@ -1,0 +1,15 @@
+All five rational-power constant comparisons checked exactly.
+30000 random floating-point h checks passed (not a proof).
+7921 finite high-precision local-modulus and product checks passed.
+These general-integer values were computed numerically, not formally certified.
+Exact integer dyadic evaluations; ratios displayed to 14 places:
+j= 2: ramp=1.93333333333333; plateau=1.96551724137931
+j= 3: ramp=1.91555555555556; plateau=1.99883990719258
+j= 4: ramp=1.91522255892867; plateau=1.99999052545809
+j= 6: ramp=1.91520656139112; plateau=1.99999999999015
+j= 8: ramp=1.91520656139715; plateau=2.00000000000000
+j=12: ramp=1.91520656139715; plateau=2.00000000000000
+Analytic ramp limit 2^(15/16) = 1.91520656139715
+Analytic plateau limit = 2
+Persistent profile defect = 0.02213689121371
+Scope check: G(3)=3, whereas r_3(3)=2; G is a structural surrogate.

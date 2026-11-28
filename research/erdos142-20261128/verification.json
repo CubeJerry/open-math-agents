@@ -1,0 +1,257 @@
+{
+  "status": "passed",
+  "lean_version": "Lean (version 4.33.1, x86_64-unknown-linux-gnu, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
+  "pins": {
+    "lean_toolchain": "leanprover/lean4:v4.33.1",
+    "formal_conjectures": {
+      "repository": "https://github.com/google-deepmind/formal-conjectures",
+      "commit": "9097e2f90e66d2f6244209cb1c07f7120d17ec53",
+      "ap_basic_sha256": "62f0a0987d49c5dbfd7b4f82a4f3dd4faba7ad545c676df06d0cda009567b5c3"
+    },
+    "mathlib": {
+      "repository": "https://github.com/leanprover-community/mathlib4",
+      "commit": "0df444a360eaa60ab8c11dca51a86af692955474"
+    },
+    "prior_profile_chain": {
+      "author": "Deldor14",
+      "repository": "https://github.com/Deldor14/open-math-agents",
+      "commit": "fa1c1438d116bda45b4cdbc272bbf41a96feed73",
+      "directory": "research/erdos142-parity",
+      "files": {
+        "BehrendModulus.lean": "9ef3bf887bee1b4744c81186d52b1aaff502bc40c7a5638d1567b6f3a24301dd",
+        "Density.lean": "27d820d8da6dd39e57cd86a2274ff46068b95435a7eda2c4971d5df57b639be4",
+        "Doubling.lean": "ef7c4ffe7d12772536647e321335f6baa597f016c765ccb31464c442b74d721d",
+        "LocalGrowth.lean": "7df2bd1fad3f8c68c08df7caf6e0a897758d511140cdf0db8349160aaefec603",
+        "Ordinary.lean": "57e8d485e5deea63917640f84b03aa48e94c47c890157de863da7b1dbb443620",
+        "ParitySplit.lean": "48a0bfaccfcd8326a2ac57183f8e2660c23ec9d66e75bd0a80dbcf0c980a9293",
+        "PrimePower.lean": "2e62d4985f57ef9b630288af05628802736f5856932a083247f4feaa4fc64ea5",
+        "Profile.lean": "8615fecb9d9c9c630519f2e362c830ad69c763905937a545a0e283b4f0b3344e",
+        "RegularScales.lean": "7f03f2232e9b87bbe6f43ff0ec1e4595ba111a519d0773b079d4fbdd9a0c9a9e",
+        "UpstreamParity.lean": "420d312634c12ed998a53cbf9ffde524e21bc22fdc06354a10e90eb4b0ec26b5"
+      }
+    }
+  },
+  "modules": [
+    {
+      "module": "FormalConjecturesForMathlib/Combinatorics/AP/Basic",
+      "source_sha256": "62f0a0987d49c5dbfd7b4f82a4f3dd4faba7ad545c676df06d0cda009567b5c3",
+      "exit_code": 0,
+      "axiom_audits": {}
+    },
+    {
+      "module": "ParitySplit",
+      "source_sha256": "48a0bfaccfcd8326a2ac57183f8e2660c23ec9d66e75bd0a80dbcf0c980a9293",
+      "exit_code": 0,
+      "axiom_audits": {
+        "ProgressionParity.free_iff": [
+          "propext",
+          "Quot.sound"
+        ]
+      }
+    },
+    {
+      "module": "UpstreamParity",
+      "source_sha256": "420d312634c12ed998a53cbf9ffde524e21bc22fdc06354a10e90eb4b0ec26b5",
+      "exit_code": 0,
+      "axiom_audits": {
+        "ProgressionParity.upstream_parity": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      }
+    },
+    {
+      "module": "Doubling",
+      "source_sha256": "ef7c4ffe7d12772536647e321335f6baa597f016c765ccb31464c442b74d721d",
+      "exit_code": 0,
+      "axiom_audits": {
+        "ProgressionParity.doubling_recurrence": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "ProgressionParity.three_halves_doubling": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      }
+    },
+    {
+      "module": "PrimePower",
+      "source_sha256": "2e62d4985f57ef9b630288af05628802736f5856932a083247f4feaa4fc64ea5",
+      "exit_code": 0,
+      "axiom_audits": {
+        "ProgressionParity.prime_power_dilation": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "ProgressionParity.prime_power_sharp": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      }
+    },
+    {
+      "module": "LocalGrowth",
+      "source_sha256": "7df2bd1fad3f8c68c08df7caf6e0a897758d511140cdf0db8349160aaefec603",
+      "exit_code": 0,
+      "axiom_audits": {
+        "ProgressionParity.relative_increment": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      }
+    },
+    {
+      "module": "BehrendModulus",
+      "source_sha256": "9ef3bf887bee1b4744c81186d52b1aaff502bc40c7a5638d1567b6f3a24301dd",
+      "exit_code": 0,
+      "axiom_audits": {
+        "ProgressionParity.explicit_ratio": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      }
+    },
+    {
+      "module": "RegularScales",
+      "source_sha256": "7f03f2232e9b87bbe6f43ff0ec1e4595ba111a519d0773b079d4fbdd9a0c9a9e",
+      "exit_code": 0,
+      "axiom_audits": {
+        "ProgressionParity.slow_scale_count": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      }
+    },
+    {
+      "module": "Profile",
+      "source_sha256": "8615fecb9d9c9c630519f2e362c830ad69c763905937a545a0e283b4f0b3344e",
+      "exit_code": 0,
+      "axiom_audits": {
+        "ProgressionParity.slow_window_count": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "ProgressionParity.block_profile": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "ProgressionParity.uniform_profile_count": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      }
+    },
+    {
+      "module": "Density",
+      "source_sha256": "27d820d8da6dd39e57cd86a2274ff46068b95435a7eda2c4971d5df57b639be4",
+      "exit_code": 0,
+      "axiom_audits": {
+        "ProgressionParity.exceptional_sqrt_bound": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "ProgressionParity.profile_density_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      }
+    },
+    {
+      "module": "Ordinary",
+      "source_sha256": "57e8d485e5deea63917640f84b03aa48e94c47c890157de863da7b1dbb443620",
+      "exit_code": 0,
+      "axiom_audits": {
+        "ProgressionParity.logarithmic_mass_bound": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "ProgressionParity.logarithmic_density_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      }
+    },
+    {
+      "module": "Equidistribution",
+      "source_sha256": "d58493a3c17c2ecbb89e219bf968c10ebc1131c3c4e8f552852f65f30f77dbec",
+      "exit_code": 0,
+      "axiom_audits": {
+        "Erdos142Equidistribution.interval_discrepancy": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Erdos142Equidistribution.logarithmic_near_extremizer_bound": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Erdos142Equidistribution.logarithmic_near_extremizer_density_one": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      }
+    },
+    {
+      "module": "Residues",
+      "source_sha256": "0722975d59a4be70046abce752b5baea72eaf5c1a4738666af6374223337c5c0",
+      "exit_code": 0,
+      "axiom_audits": {
+        "Erdos142Equidistribution.residue_discrepancy": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      }
+    },
+    {
+      "module": "SparseDrops",
+      "source_sha256": "4c9a5327cc76494437b433586606eed6c5c3c43e7758c23fd79f9409c44d3e13",
+      "exit_code": 0,
+      "axiom_audits": {
+        "Erdos142SparseDrops.slow_step_count": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Erdos142SparseDrops.slow_step_fraction": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Erdos142SparseDrops.square_drop": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Erdos142SparseDrops.square_recovery": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "Erdos142SparseDrops.ratios_fail_eventual_closeness": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      }
+    }
+  ]
+}
