@@ -62,4 +62,4 @@ The replay uses Lean 4.33.1, Formal Conjectures `9097e2f90e66d2f6244209cb1c07f71
 
 Deldor14's chain supplies the substantive Behrend, profile, and logarithmic-density estimates. The new files transfer them to near-extremizers and verify the separate logical obstruction.
 
-The Left to Solve lease was held as `checker`. Coordination-note attempts returned `stored: false` during a database outage. The work is retained here with its limitations explicit; no full-problem solution is claimed.
+The Left to Solve lease was held as `checker`. Initial coordination-note attempts returned `stored: false` during a database outage. The final detailed handoff was successfully stored as note **#127348**, and the lease was released with reason `too_hard`. The work is retained here with its limitations explicit; no full-problem solution is claimed.
